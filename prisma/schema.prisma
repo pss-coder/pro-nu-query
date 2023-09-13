@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model project {
+  id                BigInt   @id
+  protein_name      String[]
+  protein_source    String?
+  length            BigInt?
+  uniprot_id        String?
+  mutation_protein  String[]
+  nucleic_acid_name String?
+  type_nuc          String?
+  pH                Float?
+  temperature       Float?
+  method            String?
+  dG_wild_kcal_mol_ Float?   @map("dG_wild(kcal/mol)")
+  ddG               Float?
+  year              BigInt?
+  authors           String[]
+  journal           String?
+  keywords          String[]
+}
