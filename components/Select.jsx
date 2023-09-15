@@ -3,30 +3,45 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
-// TODO: get protein_name
+import useSWR from 'swr'
+import { getSelectColumns } from '@/lib/Hooks'
 
-const people = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
-  { id: 7, name: 'Caroline Schultz' },
-  { id: 8, name: 'Mason Heaney' },
-  { id: 9, name: 'Claudie Smitham' },
-  { id: 10, name: 'Emil Schaefer' },
-]
+
+// TODO: get protein_name
+/**
+ type_nuc
+ method
+ journal
+ */
+
+ const columns = [
+    { id: 1, name: 'protein_name' },
+    { id: 2, name: 'protein_source' },
+    { id: 3, name: 'nucleic_acid_name' },
+    { id: 4, name: 'type_nuc' },
+    { id: 5, name: 'method' },
+    { id: 6, name: 'journal' },
+  ]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
 export default function Select({ className, ...props }) {
-  const [selected, setSelected] = useState(people[3])
+
+    const [selected, setSelected] = useState(columns[0])
+
+    // need pass protein name to update text input
+    function updateSelect(value) {
+        setSelected(value)
+        console.log(value)
+    }
 
   return (
-    <Listbox className={clsx('', className)} value={selected} onChange={setSelected}>
+    <Listbox className={clsx('', className)} value={selected} onChange={updateSelect}>
       {({ open }) => (
         <>
           {/* <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Listbox.Label> */}
@@ -46,21 +61,21 @@ export default function Select({ className, ...props }) {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {people.map((person) => (
+                {columns.map((column) => (
                   <Listbox.Option
-                    key={person.id}
+                    key={column.id}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                         'relative cursor-default select-none py-2 pl-3 pr-9'
                       )
                     }
-                    value={person}
+                    value={column}
                   >
                     {({ selected, active }) => (
                       <>
                         <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                          {person.name}
+                          {column.name}
                         </span>
 
                         {selected ? (

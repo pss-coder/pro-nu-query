@@ -58,10 +58,10 @@ export default function ComboBox({ className, ...props }) {
         </button> */}
         {/* </Combobox.Button> */}
 
-        <div className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+        <div className="absolute inset-y-0 right-0 flex items-center rounded-r-md  focus:outline-none">
             <button
           type="button"
-          className="relative -ml-px inline-flex items-center  rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          className="relative -ml-px inline-flex items-center rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
           <BarsArrowUpIcon className="-ml-0.5 h-5 w-5 text-gray-400" aria-hidden="true" />
         </button>
