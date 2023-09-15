@@ -24,8 +24,9 @@ export default function Home() {
   // useState -> for column data <- dependent on the select dropdown
 
   const [selected, setSelected] = useState(columns[0])
-
   const [comboBox, setComboBox] = useState([{id:0, search:''}])
+
+  const [selectedComboBox, setSelectedComboBox] = useState(null)
 
   function updateSelect(value) {
     setSelected(value)
@@ -44,10 +45,12 @@ export default function Home() {
       value: text
     })
 
+    setQuery(query)
+
     fetch("/api/acids/?"+query.toString())
     .then((res) => res.json())
     .then(data => {
-      // Update Combobox Data
+      // Pass data to new page??
       console.log(data)
     })
   }
@@ -76,13 +79,11 @@ useEffect(() => {
 
       <Container className="pt-20 pb-16 text-center lg:pt-32">
         {/* TODO: put in a component?? */}
-        <div className="flex shadow-md rounded-md flex-col justify-center p-4 sm:flex-row md:flex-col lg:flex-row">
-          {/* TODO: get data from select and pass to combobox to display */}
-          {/* get text from combobox and pass to query */}
-          {selected && <Select className="mb-2 sm:mr-2 sm:mb-0" columns={columns} selected={selected} updateSelect={updateSelect} />}
 
-          {comboBox && <Combobox className="flex-1 mb-2 sm:ml-2 sm:mb-0" comboBox={comboBox} search={search}/>}
-          
+        <div className="flex shadow-md rounded-md flex-col justify-center p-4 sm:flex-row md:flex-col lg:flex-row">
+          {selected && <Select className="mb-2 sm:mr-2 sm:mb-0" columns={columns} selected={selected} updateSelect={updateSelect} />}
+          {/* Pass query into comboBox */}
+          {comboBox && <Combobox className="flex-1 mb-2 sm:ml-2 sm:mb-0" comboBox={comboBox} column={selected.name}  selected={selectedComboBox} setSelected={setSelectedComboBox} search={search}/>}  
         </div>
       </Container>
 

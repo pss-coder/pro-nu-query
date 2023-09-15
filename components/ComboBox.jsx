@@ -16,6 +16,7 @@ import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon, BarsArrowUpIcon, UsersIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
+import Link from 'next/link'
 
 // const people = [
 //   { id: 1, name: 'Leslie Alexander' },
@@ -28,7 +29,7 @@ function classNames(...classes) {
 }
 
 export default function ComboBox({ className, ...props }) {
-  const [selected, setSelected] = useState(null)
+  // const [selected, setSelected] = useState(null)
   const [query, setQuery] = useState('')
 
   var filteredPeople =
@@ -39,7 +40,7 @@ export default function ComboBox({ className, ...props }) {
   })
 
   return (
-    <Combobox className={clsx('', className)} as="div" value={selected} onChange={setSelected}>
+    <Combobox className={clsx('', className)} as="div" value={props.selected} onChange={props.setSelected}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative mt-2">
         <Combobox.Input disabled
@@ -54,13 +55,21 @@ export default function ComboBox({ className, ...props }) {
         </Combobox.Button>
 
         <div className="absolute inset-y-0 right-0 flex items-center rounded-r-md  focus:outline-none">
-            <button
+            <Link
+            href={{
+              pathname: '/results',
+              query: {
+                column: props.column,
+                value: props.selected
+              }
+            }}
+            
           type="button"
-          onClick={() => { props.search(selected? selected : query) }}
+          //onClick={() => { props.search(selected? selected : query) }}
           className="relative -ml-px inline-flex items-center rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
           <BarsArrowUpIcon className="-ml-0.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-        </button>
+        </Link>
         </div>
 
        
