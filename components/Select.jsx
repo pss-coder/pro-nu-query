@@ -14,14 +14,6 @@ import { getSelectColumns } from '@/lib/Hooks'
  journal
  */
 
- const columns = [
-    { id: 1, name: 'protein_name' },
-    { id: 2, name: 'protein_source' },
-    { id: 3, name: 'nucleic_acid_name' },
-    { id: 4, name: 'type_nuc' },
-    { id: 5, name: 'method' },
-    { id: 6, name: 'journal' },
-  ]
 
 
 function classNames(...classes) {
@@ -32,22 +24,15 @@ function classNames(...classes) {
 
 export default function Select({ className, ...props }) {
 
-    const [selected, setSelected] = useState(columns[0])
-
-    // need pass protein name to update text input
-    function updateSelect(value) {
-        setSelected(value)
-        console.log(value)
-    }
 
   return (
-    <Listbox className={clsx('', className)} value={selected} onChange={updateSelect}>
+    <Listbox className={clsx('', className)} value={props.selected} onChange={props.updateSelect}>
       {({ open }) => (
         <>
           {/* <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Listbox.Label> */}
           <div className="relative mt-2">
             <Listbox.Button className="w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              <span className="block truncate">{selected.name}</span>
+              <span className="block truncate">{props.selected.name}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </span>
@@ -61,7 +46,7 @@ export default function Select({ className, ...props }) {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {columns.map((column) => (
+                {props.columns.map((column) => (
                   <Listbox.Option
                     key={column.id}
                     className={({ active }) =>

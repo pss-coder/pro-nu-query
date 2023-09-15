@@ -6,33 +6,29 @@ import { PrismaClient } from "@prisma/client"
 
 export default async function handler(req, res) {
   const prisma = new PrismaClient()
-  // res.status(200).json({ name: 'John Doe' })
+  const {name} = req.query
+  // console.log(req.query)
 
-//   const result = await prisma.project.findMany({
-//     select: {
-//         protein_name: true
-//     }, take: 5
-// })
+  // For getting column data
+  const result = await prisma.project.findMany({
+    select: {
+      [name]: true
+    }
+  })
+    
+  const data = result.flatMap(item => item[Object.keys(item)[0]])
+  const uniqueSet = new Set(data)
+  var unique = [...uniqueSet]
 
-//   console.log("api is called")
+  // set a col id on each result
+  var counter = 1
+  unique = unique.map(item => {
+    return {
+      id: counter++, 
+      search: item
+    }
+  })
+  
 
-//   const data = result.map((item) => {
-//     return item
-//     // return Number(id.id).toString()
-// });
-
-  // for proteinData
-  // console.log(data[0].protein_name[0])
-
-  const columns = [
-    { id: 1, name: 'protein_name' },
-    { id: 2, name: 'protein_source' },
-    { id: 3, name: 'nucleic_acid_name' },
-    { id: 4, name: 'type_nuc' },
-    { id: 5, name: 'method' },
-    { id: 6, name: 'journal' },
-  ]
-
-res.status(200).json({data: columns})
-
+  res.status(200).json({data: unique})
 }
