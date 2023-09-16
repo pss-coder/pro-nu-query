@@ -5,8 +5,8 @@ import { PrismaClient } from "@prisma/client"
 export default async function handler(req, res) {
     const prisma = new PrismaClient()
     
-    const {column, value} = req.query
-    if(!column || !value) {
+    const {column, value, page} = req.query
+    if(!column || !value || !page) {
         return res.status(400).json({ error: { message:  'No result found' } })
     }
     // if(!column && !value) {res.status(404).JSON({error: 'missing column or value'})}
@@ -17,7 +17,9 @@ export default async function handler(req, res) {
                 [column]: {
                     hasSome: [value]
                 }
-            }
+            },
+            take: 10,
+            skip: 10*page
           })
     } else {
         result = await prisma.project.findMany({
@@ -25,7 +27,9 @@ export default async function handler(req, res) {
                 [column]: {
                     equals: value
                 }
-            }
+            },
+            take: 10,
+            skip: 10*page
           })
     }
    
