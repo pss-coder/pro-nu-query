@@ -3,28 +3,12 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
-import useSWR from 'swr'
-import { getSelectColumns } from '@/lib/Hooks'
-
-
-// TODO: get protein_name
-/**
- type_nuc
- method
- journal
- */
-
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-
 export default function Select({ className, ...props }) {
-
-
   return (
     <Listbox className={clsx('', className)} value={props.selected} onChange={props.updateSelect}>
       {({ open }) => (

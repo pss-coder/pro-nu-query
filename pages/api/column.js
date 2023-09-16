@@ -1,13 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
-
-
+// get column data
 export default async function handler(req, res) {
-  const prisma = new PrismaClient()
   const {name} = req.query
-  // console.log(req.query)
+  
 
   // For getting column data
   const result = await prisma.project.findMany({
@@ -16,6 +14,7 @@ export default async function handler(req, res) {
     }
   })
     
+  // clean column data for UI
   const data = result.flatMap(item => item[Object.keys(item)[0]])
   const uniqueSet = new Set(data)
   var unique = [...uniqueSet]

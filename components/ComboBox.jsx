@@ -1,42 +1,22 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon, BarsArrowUpIcon, UsersIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import Link from 'next/link'
 
-// const people = [
-//   { id: 1, name: 'Leslie Alexander' },
-//   { id: 2, name: 'James' },
-//   // More users...
-// ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function ComboBox({ className, ...props }) {
-  // const [selected, setSelected] = useState(null)
   const [query, setQuery] = useState('')
 
-  var filteredPeople =
+  var filtered =
     query === ''
       ? props.comboBox
-      : props.comboBox.filter((person) => {
-          return person.search.toLowerCase().includes(query.toLowerCase())
+      : props.comboBox.filter((value) => {
+          return value.search.toLowerCase().includes(query.toLowerCase())
   })
 
   return (
@@ -63,9 +43,7 @@ export default function ComboBox({ className, ...props }) {
                 value: props.selected
               }
             }}
-            
           type="button"
-          //onClick={() => { props.search(selected? selected : query) }}
           className="relative -ml-px inline-flex items-center rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
           <BarsArrowUpIcon className="-ml-0.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -73,14 +51,13 @@ export default function ComboBox({ className, ...props }) {
         </div>
 
        
-
-        {filteredPeople.length > 0 && (
+        {filtered.length > 0 && (
           <Combobox.Options 
           className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredPeople.map((person) => (
+            {filtered.map((value) => (
               <Combobox.Option
-                key={person.id}
-                value={person.search}
+                key={value.id}
+                value={value.search}
                 className={({ active }) =>
                   classNames(
                     'relative cursor-default select-none py-2 pl-3 pr-9',
@@ -90,7 +67,7 @@ export default function ComboBox({ className, ...props }) {
               >
                 {({ active, selected }) => (
                   <>
-                    <span className={classNames('block truncate', selected && 'font-semibold')}>{person.search}</span>
+                    <span className={classNames('block truncate', selected && 'font-semibold')}>{value.search}</span>
 
                     {selected && (
                       <span

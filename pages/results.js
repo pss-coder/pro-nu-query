@@ -11,13 +11,13 @@ export default function Results() {
     const isQueryPresent = column && value
 
     const { data, error, isLoading } = useSWR( 
-        isQueryPresent ? '/api/acids?'+new URLSearchParams({column, value}).toString() : null, 
+        isQueryPresent ? '/api/search?'+new URLSearchParams({column, value}).toString() : null, 
         isQueryPresent ? fetcher : null)
     
     if (error) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
     // return <div>hello {data.data[0].id}!</div>
-    return (
+    if (data) { return (
         <>
             <ul>
                 {data.data.map((row) => {
@@ -30,6 +30,13 @@ export default function Results() {
             </ul>
         </>
     )
+    }
 
-    
+    return (
+        <>
+            Nothing to display
+            Link here for search or advanced search
+        </>
+
+    )
 }

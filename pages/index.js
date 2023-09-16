@@ -1,73 +1,36 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Head from 'next/head'
 import { Container } from '@/components/Container'
 import Select from '@/components/Select'
 import Combobox from '@/components/ComboBox'
 import { useEffect, useState } from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
-
-const columns = [
-  { id: 1, name: 'protein_name' },
-  { id: 2, name: 'protein_source' },
-  { id: 3, name: 'nucleic_acid_name' },
-  { id: 4, name: 'type_nuc' },
-  { id: 5, name: 'method' },
-  { id: 6, name: 'journal' },
-]
+import { getColData, getColumns } from '@/lib/dbManager'
 
 export default function Home() {
-  // useState -> for select dropdown
-  // useState -> for column data <- dependent on the select dropdown
 
+  const columns = getColumns()
   const [selected, setSelected] = useState(columns[0])
   const [comboBox, setComboBox] = useState([{id:0, search:''}])
-
   const [selectedComboBox, setSelectedComboBox] = useState(null)
-
+  
   function updateSelect(value) {
     setSelected(value)
   }
 
-  // function onComboBoxField(input) {
-  //   console.log(input)
-  // }
-
-  function search(text) {
-    console.log(selected.name)
-    console.log(text)
-
-    var query = new URLSearchParams({
-      column: selected.name,
-      value: text
-    })
-
-    setQuery(query)
-
-    fetch("/api/acids/?"+query.toString())
-    .then((res) => res.json())
-    .then(data => {
-      // Pass data to new page??
-      console.log(data)
-    })
-  }
-
-// Updates ComboBox Data based on selected option
-useEffect(() => {
-  if(selected) {
-    fetch("/api/hello/?name="+selected.name)
-    .then((res) => res.json())
-    .then(data => {
-      // Update Combobox Data
-      setComboBox(data.data)
-    })
-  }
-  
-
-}, [selected]) 
+  // Updates ComboBox Data based on selected option
+  useEffect(() => {
+    if(selected) {
+      getColData(selected.name)
+        .then((res) => res.json())
+        .then(data => {
+          if (data) {
+            setComboBox(data.data)
+          }
+        })
+    }
+  }, [selected]) 
 
   return (
     <>
@@ -78,12 +41,11 @@ useEffect(() => {
       <main>
 
       <Container className="pt-20 pb-16 text-center lg:pt-32">
-        {/* TODO: put in a component?? */}
 
         <div className="flex shadow-md rounded-md flex-col justify-center p-4 sm:flex-row md:flex-col lg:flex-row">
           {selected && <Select className="mb-2 sm:mr-2 sm:mb-0" columns={columns} selected={selected} updateSelect={updateSelect} />}
-          {/* Pass query into comboBox */}
-          {comboBox && <Combobox className="flex-1 mb-2 sm:ml-2 sm:mb-0" comboBox={comboBox} column={selected.name}  selected={selectedComboBox} setSelected={setSelectedComboBox} search={search}/>}  
+          {/* TODO: Add error validation <- missing field do nothing */}
+          {comboBox && <Combobox className="flex-1 mb-2 sm:ml-2 sm:mb-0" comboBox={comboBox} column={selected.name} selected={selectedComboBox} setSelected={setSelectedComboBox}/>}  
         </div>
       </Container>
 
