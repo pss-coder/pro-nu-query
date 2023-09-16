@@ -1,4 +1,5 @@
-import { getAcidData, getAllAcidIds } from '@/lib/acid';
+import { getAcidData, getAllAcidIds } from '@/lib/dbManager';
+import Link from 'next/link';
 
 export default function Post({acidData}) {
   return (
@@ -8,7 +9,10 @@ export default function Post({acidData}) {
     {acidData.length}
     <br />
     {acidData.protein_name}
+
+    <Link href={'/'}>Go Back Home</Link>
     </div>
+    
   );
 }
 
@@ -22,10 +26,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const data = await (await getAcidData(params.id)).dt
+    const data = (await getAcidData(params.id)).dt
     const acidData = JSON.parse(data)[0]
-    
-    console.log(acidData)
     return {
       props: {
         acidData,
