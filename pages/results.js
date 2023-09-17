@@ -1,6 +1,7 @@
 import { Container } from "@/components/Container";
 import Header from "@/components/Header";
 import Pagination from "@/components/Pagination";
+import SearchField from "@/components/SearchField";
 import Table from "@/components/Table";
 import Link from "next/link";
 import { useRouter } from "next/router"
@@ -49,7 +50,7 @@ const dummyData = [ {
 
 export default function Results() {
     const router = useRouter()
-    const {column, value} = router.query
+    const {colindex,column, value} = router.query
     const isQueryPresent = column && value
 
     // denote page number
@@ -58,9 +59,6 @@ export default function Results() {
     const { data, error, isLoading } = useSWR( 
         isQueryPresent ? '/api/search?'+new URLSearchParams({column, value,page}).toString() : null, 
         isQueryPresent ? fetcher : null)
-
-    
-    
     
     if (error) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
@@ -79,11 +77,13 @@ export default function Results() {
                     )})}
                     <br />
             </ul> */}
+            <Header />
+            
             <Container>
+            <SearchField columnIndex={colindex} value={value} />
             <Table results={data.data} />
             <Pagination page={page} setPage={setPage} length={data.data.length} />
             </Container>
-            
         </>
     )
     }

@@ -4,6 +4,7 @@ const items = [
     { id: 3, title: 'User Interface Designer', department: 'Design', type: 'Full-time', location: 'Remote' },
   ]
   
+//   TODO: FIX numbering issue
   export default function Pagination({page, setPage, length}) {
     return (
       <nav
@@ -18,7 +19,7 @@ const items = [
         </div>
         <div className="flex flex-1 justify-between sm:justify-end">
           <button
-            onClick={() => setPage(page - 1)}
+            onClick={() => page > 0 ? setPage(page - 1) : null}
             className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
           >
             Previous

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon, BarsArrowUpIcon, UsersIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import Link from 'next/link'
@@ -23,7 +23,7 @@ export default function ComboBox({ className, ...props }) {
     <Combobox className={clsx('', className)} as="div" value={props.selected} onChange={props.setSelected}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative mt-2">
-        <Combobox.Input disabled
+        <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           displayValue={(text) => {return text;}}
           onChange={(event) => setQuery(event.target.value)}
@@ -39,7 +39,9 @@ export default function ComboBox({ className, ...props }) {
             href={{
               pathname: '/results',
               query: {
-                column: props.column,
+                column: props.column.name,
+                colindex: props.column.id-1, // get colindex not id => index = id - 1
+                // valindex: props.selected.id,
                 value: props.selected
               }
             }}
