@@ -5,6 +5,16 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+// Protein
+// Nucleaic Acid
+// References
+let items = {
+    Protein: [],
+    Nucleic: [],
+    References: [],
+    
+}
+
 export default function TabData() {
   let [categories] = useState({
     Recent: [
