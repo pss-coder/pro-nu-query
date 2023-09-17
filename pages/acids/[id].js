@@ -1,16 +1,23 @@
+import { Container } from '@/components/Container';
+import TabData from '@/components/Tab';
 import { getAcidData, getAllAcidIds } from '@/lib/dbManager';
 import Link from 'next/link';
 
 export default function Post({acidData}) {
   return (
-    <div >
+    <div className="pt-20 pb-16 text-center lg:pt-32">
+    <Container>
+    <TabData />
     Id: {acidData.id}
     <br />
     {acidData.length}
     <br />
     {acidData.protein_name}
 
+    </Container>
     <Link href={'/'}>Go Back Home</Link>
+
+
     </div>
     
   );
@@ -27,7 +34,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
     const data = (await getAcidData(params.id)).dt
-    const acidData = JSON.parse(data)[0]
+    const acidData = JSON.parse(data)
     return {
       props: {
         acidData,
