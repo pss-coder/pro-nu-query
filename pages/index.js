@@ -14,7 +14,7 @@ export default function Home() {
 
       {/* TODO: place into a searchFieldComponent */}
       <Container className="pt-20 pb-16 text-center lg:pt-32">
-        <SearchField columnIndex={0} initialSelectedComboBox={null} />
+        <SearchField columnIndex={0} value={null}/>
       </Container>
 
       {/* TODO: Version 3 */}

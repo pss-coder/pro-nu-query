@@ -13,6 +13,7 @@ export default function SearchField({columnIndex, value}) {
   const [selectedComboBox, setSelectedComboBox] = useState(value)
   
   function updateSelect(value) {
+    console.log(value)
     setSelected(value)
   }
 

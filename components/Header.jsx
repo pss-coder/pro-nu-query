@@ -9,6 +9,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link'
 
 const products = [
   {
@@ -48,11 +49,11 @@ export default function Header() {
     <header className="relative isolate z-10 bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">ProNuQuery</span>
             <h1 className='h-8 w-auto text-1xl text-slate-400 font-bold'>ProNuQuery</h1>
             {/* <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" /> */}
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -65,7 +66,7 @@ export default function Header() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <Popover>
+          {/* <Popover>
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               Product
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
@@ -113,17 +114,17 @@ export default function Header() {
                 </div>
               </Popover.Panel>
             </Transition>
-          </Popover>
+          </Popover> */}
 
+          <Link href="/terminology" className="text-sm font-semibold leading-6 text-gray-900">
+            Terminology
+          </Link>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
+            About
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Company
-          </a>
+          </a> */}
         </Popover.Group>
         {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
@@ -157,7 +158,7 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
+                {/* <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
@@ -181,34 +182,34 @@ export default function Header() {
                       </Disclosure.Panel>
                     </>
                   )}
-                </Disclosure>
+                </Disclosure> */}
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Features
+                  Terminology
                 </a>
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Marketplace
+                  About
                 </a>
-                <a
+                {/* <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Company
-                </a>
+                </a> */}
               </div>
-              <div className="py-6">
+              {/* <div className="py-6">
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log in
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </Dialog.Panel>

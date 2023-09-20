@@ -8,7 +8,7 @@ const people = [
   export default function Table({results}) {
     return (
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:items-center">
+        {/* <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-base font-semibold leading-6 text-gray-900">Users</h1>
             <p className="mt-2 text-sm text-gray-700">
@@ -23,7 +23,7 @@ const people = [
               Add user
             </button>
           </div>
-        </div>
+        </div> */}
         <div className="-mx-4 mt-8 sm:-mx-0">
           <table className="min-w-full divide-y divide-gray-300">
             <thead>
@@ -73,7 +73,14 @@ const people = [
                   <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{row.protein_name}</td>
                   <td className="px-3 py-4 text-sm text-gray-500">{row.protein_source}</td>
                   <td className="px-3 py-4 text-sm text-gray-500">{row.length}</td>
-                  <td className="px-3 py-4 text-sm text-gray-500">{row.uniprot_id}</td>
+                  <td className="px-3 py-4 text-sm text-gray-500">
+                  {/* TODO: update classname for UI */}
+                    <Link href={{
+                      pathname: `https://www.uniprot.org/uniprotkb/${row.uniprot_id}/entry`
+                    }} rel="noopener noreferrer" target="_blank">
+                      {row.uniprot_id}
+                    </Link>
+                  </td>
                   <td className="px-3 py-4 text-sm text-gray-500">{row.mutation_protein}</td>
                   <td className="px-3 py-4 text-sm text-gray-500">{row.nucleic_acid_name}</td>
                   <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
@@ -81,7 +88,8 @@ const people = [
                       Edit<span className="sr-only">, {row.id}</span>
                     </a> */}
                     <Link href={'/acids/'+row.id} className="text-indigo-600 hover:text-indigo-900">
-                        Edit
+                        View
+                        {/* TODO: change to an icon instead */}
                     </Link>
                   </td>
                 </tr>

@@ -1,22 +1,26 @@
 import { Container } from '@/components/Container';
+import Header from '@/components/Header';
+import Row from '@/components/Row';
 import TabData from '@/components/Tab';
 import { getAcidData, getAllAcidIds } from '@/lib/dbManager';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Post({acidData}) {
   return (
-    <div className="pt-20 pb-16 text-center lg:pt-32">
-    <Container>
-    <TabData />
+    <div>
+    <Header />
+    <Row data={acidData} />
+
+    {/* <Container>
     Id: {acidData.id}
     <br />
     {acidData.length}
     <br />
     {acidData.protein_name}
+    </Container> */}
 
-    </Container>
     <Link href={'/'}>Go Back Home</Link>
-
 
     </div>
     
