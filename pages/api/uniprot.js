@@ -15,8 +15,8 @@ export default async function handler(req, res) {
         // const xmlDoc = parser.parseFromString('<sequence length="430" mass="47409" checksum="12F54284974D27A5" modified="2013-09-18" version="2" precursor="true">MALLHSARVLSGVASAFHPGLAAAASARASSWWAHVEMGPPDPILGVTEAYKRDTNSKKMNLGVGAYRDDNGKPYVLPSVRKAEAQIAAKGLDKEYLPIGGLAEFCRASAELALGENSEVVKSGRFVTVQTISGTGALRIGASFLQRFFKFSRDVFLPKPSWGNHTPIFRDAGMQLQSYRYYDPKTCGFDFTGALEDISKIPEQSVLLLHACAHNPTGVDPRPEQWKEIATVVKKRNLFAFFDMAYQGFASGDGDKDAWAVRHFIEQGINVCLCQSYAKNMGLYGERVGAFTVICKDADEAKRVESQLKILIRPMYSNPPIHGARIASTILTSPDLRKQWLQEVKGMADRIIGMRTQLVSNLKKEGSTHSWQHITDQIGMFCFTGLKPEQVERLTKEFSIYMTKDGRISVAGVTSGNVGYLAHAIHQVTK</sequence>', "text/xml");
         // console.log(xmlDoc.querySelector('sequence'))
         const sequenceNode = dom.window.document.querySelector('sequence');
-        console.log(sequenceNode.getAttribute('length'))
-        console.log(sequenceNode.getAttribute('mass'))
+        // console.log(sequenceNode.getAttribute('length'))
+        // console.log(sequenceNode.getAttribute('mass'))
         
         if (sequenceNode) {
           const proteinSequence = sequenceNode.textContent;

@@ -84,19 +84,83 @@ function displayProteinInfo(name) {
         <div className="mt-6 lg:col-span-5 lg:mt-0">
             <h3 className="text-lg font-medium text-gray-900">Protein Name</h3>
             <p className="mt-2 text-sm text-gray-500">{name}</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Protein Source</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Sequence</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Length</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Uniprot Id</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Mutation</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
         </div>
     )
 }
 
-function displayNucleicAcid() {}
+function displayNucleicAcid(nucleic_acid_name, type_nuc) {
+    return (
+        <div className="mt-6 lg:col-span-5 lg:mt-0">
+            <h3 className="text-lg font-medium text-gray-900">Nucleic Acid Name	</h3>
+            <p className="mt-2 text-sm text-gray-500">{nucleic_acid_name}</p>
+
+            <h3 className="text-lg font-medium text-gray-900">Nucleic Acid Type	</h3>
+            <p className="mt-2 text-sm text-gray-500">{type_nuc}</p>
+
+        </div>
+    )
+}
 
 function displayComplexInformation() {}
 
-function displayExperimentalConditions() {}
+function displayExperimentalConditions() {
+    return (
+        <div className="mt-6 lg:col-span-5 lg:mt-0">
+            <h3 className="text-lg font-medium text-gray-900">pH</h3>
+            <p className="mt-2 text-sm text-gray-500">Todo</p>
 
-function displayThermodynamicParameters() {}
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Temperature (K)</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
 
-function displayReferences() {}
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Method</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+
+            {/* ΔG Wild type(kcal/mol) */}
+        </div>
+    )
+}
+
+function displayThermodynamicParameters() {
+    return (
+        <div className="mt-6 lg:col-span-5 lg:mt-0">
+            <h3 className="text-lg font-medium text-gray-900">ΔG Wild type(kcal/mol)</h3>
+            <p className="mt-2 text-sm text-gray-500">Todo</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">ddG ??</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+        </div>
+    )
+}
+
+function displayReferences() {
+    return (
+        <div className="mt-6 lg:col-span-5 lg:mt-0">
+            <h3 className="text-lg font-medium text-gray-900">Year</h3>
+            <p className="mt-2 text-sm text-gray-500">Todo</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Authors</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Journal</h3>
+            <p className="mt-2 text-sm text-gray-500">TODO</p>
+        </div>
+    )
+}
 
 
 
@@ -119,16 +183,16 @@ export default function Row({data}) {
 
   return (
     <div className="bg-white">
-      <section aria-labelledby="features-heading" className="mx-auto max-w-7xl py-32 sm:px-2 lg:px-8">
+      <section aria-labelledby="features-heading">
         <div className="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
           <div className="max-w-3xl">
-            <h2 id="features-heading" className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            {/* <h2 id="features-heading" className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               Technical Specifications
             </h2>
             <p className="mt-4 text-gray-500">
               The Organize modular system offers endless options for arranging your favorite and most used items. Keep
               everything at reach and in its place, while dressing up your workspace.
-            </p>
+            </p> */}
           </div>
 
           <Tab.Group as="div" className="mt-4">
@@ -164,10 +228,10 @@ export default function Row({data}) {
                     <div key={tab.name + index} className="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8">
 
                         {tab.name == 'Protein' && <> {displayProteinInfo(data.protein_name)} </>}
-                        {tab.name == 'Nucleic Acid' && <>This is Nucleaic Acid</>}
-                        {tab.name == 'Complex Information' && <>This is Complex Information</>}
-                        {tab.name == 'Experimental Conditions' && <>This is Experimental Conditions</>}
-                        {tab.name == 'Thermodynamic Parameters' && <>This is Thermodynamic Parameters</>}
+                        {tab.name == 'Nucleic Acid' && <> {displayNucleicAcid(data.nucleic_acid_name, data.type_nuc)}</>}
+                        {tab.name == 'Complex Information' && <>{displayComplexInformation()}</>}
+                        {tab.name == 'Experimental Conditions' && <>{displayExperimentalConditions()}</>}
+                        {tab.name == 'Thermodynamic Parameters' && <>{displayThermodynamicParameters()}</>}
 
                     </div>
 
