@@ -2,6 +2,7 @@ import Header from '@/components/Header'
 import Head from 'next/head'
 import { Container } from '@/components/Container'
 import SearchField from '@/components/SearchField'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -19,12 +20,13 @@ export default function Home() {
 
       {/* TODO: Version 3 */}
       <Container className="text-center">
-      <button
+      <Link
+        href="/advancesearch"
         type="button"
         className="rounded-md bg-indigo-50 m-5 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
       >
         Advanced Search
-      </button>
+      </Link>
 
       <button
         type="button"
