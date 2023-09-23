@@ -11,32 +11,6 @@ import {
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 
-const products = [
-  {
-    name: 'Analytics',
-    description: 'Get a better understanding where your traffic is coming from',
-    href: '#',
-    icon: ChartPieIcon,
-  },
-  {
-    name: 'Engagement',
-    description: 'Speak directly to your customers with our engagement tool',
-    href: '#',
-    icon: CursorArrowRaysIcon,
-  },
-  { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-  {
-    name: 'Integrations',
-    description: 'Your customers’ data will be safe and secure',
-    href: '#',
-    icon: SquaresPlusIcon,
-  },
-]
-const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
-  { name: 'View all products', href: '#', icon: RectangleGroupIcon },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -119,7 +93,7 @@ export default function Header() {
           <Link href="/terminology" className="text-sm font-semibold leading-6 text-gray-900">
             Terminology
           </Link>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="/about" className="text-sm font-semibold leading-6 text-gray-900">
             About
           </a>
           {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
@@ -190,7 +164,7 @@ export default function Header() {
                   Terminology
                 </Link>
                 <a
-                  href="#"
+                  href="/about"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   About

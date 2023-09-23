@@ -3,23 +3,27 @@ import Head from 'next/head'
 import { Container } from '@/components/Container'
 import SearchField from '@/components/SearchField'
 import Link from 'next/link'
+import { TypeAnimation } from 'react-type-animation';
+import Footer from '@/components/Footer'
+
 
 export default function Home() {
   return (
     <>
       <Head>
-      <title>ProNuQuery</title>
+        <title>ProNuQuery</title>
       </Head>
+      
+      <div className="flex flex-col min-h-screen"> {/* Use a div wrapper with flex and flex-col */}
       <Header />
-      <main>
+      <main className='flex-grow'>
+        <Container className="pt-20 pb-16 text-center lg:pt-32">
+          <TypeAnimation speed={200} className="text-3xl font-semibold text-indigo-700 mb-4"
+            sequence={['Welcome to ProNuQuery!',500]} />
+          <SearchField columnIndex={0} value={null} />
+        </Container>
 
-      {/* TODO: place into a searchFieldComponent */}
-      <Container className="pt-20 pb-16 text-center lg:pt-32">
-        <SearchField columnIndex={0} value={null}/>
-      </Container>
-
-      {/* TODO: Version 3 */}
-      <Container className="text-center">
+        <Container className="text-center">
       <Link
         href="/advancedsearch"
         type="button"
@@ -37,8 +41,12 @@ export default function Home() {
       </Link>
       </Container>
 
+      
       </main>
+
+      <Footer />
+      </div>
+      
     </>
-   
   )
 }

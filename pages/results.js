@@ -1,8 +1,10 @@
 import { Container } from "@/components/Container";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Pagination from "@/components/Pagination";
 import SearchField from "@/components/SearchField";
 import Table from "@/components/Table";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
@@ -93,13 +95,26 @@ export default function Results() {
                     )})}
                     <br />
             </ul> */}
-            <Header />
+            <Head>
+                <title>ProNuQuery</title>
+            </Head>
+
+            <div className="flex flex-col min-h-screen"> {/* Use a div wrapper with flex and flex-col */}
+            <main className='flex-grow'>
+                <Header />
             
-            <Container>
-            <SearchField columnIndex={colindex} value={value} />
-            <Table results={data.data} />
-            <Pagination page={page} setPage={setPage} length={data.data.length} />
-            </Container>
+                <Container>
+                    <SearchField columnIndex={colindex} value={value} />
+                    <Table results={data.data} />
+                    <Pagination page={page} setPage={setPage} length={data.data.length} />
+                </Container>
+            </main>
+
+            <Footer />
+            </div>
+
+
+            
         </>
     )
     }

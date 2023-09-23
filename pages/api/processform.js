@@ -7,7 +7,12 @@ export default async function handler(req, res) {
         const colindex = req.query['column[id]']
         const column = req.query['column[name]']
         const value = req.query.value
-        res.redirect(307, `/results/?column=${column}&colindex=${colindex-1}&value=${value}&issimple=${isSimple}`)
+        if(value) {
+            res.redirect(307, `/results/?column=${column}&colindex=${colindex-1}&value=${value}&issimple=${isSimple}`)
+        } else {
+            return res.redirect('/404', 404)
+        }
+        
         return
     } else {
         

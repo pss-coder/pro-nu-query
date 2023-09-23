@@ -4,37 +4,33 @@ import Header from '@/components/Header';
 import Row from '@/components/Row';
 import TabData from '@/components/Tab';
 import { getAcidData, getAllAcidIds } from '@/lib/dbManager';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function Post({acidData}) {
   return (
-    <div>
-    <Header />
-    <Container >
-      <Row data={acidData} />
-    </Container>
-    <br />
-    <Container>
-    <Link href={'/'}>Go Back Home</Link>
-    </Container>
+    <>
+    <Head>
+      <title>ProNuQuery - {acidData.id}</title>
+    </Head>
+      
+      <div className="flex flex-col min-h-screen">
+        <main className='flex-grow'>
+        <Header />
+        <Container >
+          <Row data={acidData} />
+        </Container>
+          <br />
+        <Container>
+          <Link href={'/'}>Go Back Home</Link>
+        </Container>
+        </main>
     
-    {/* <Container 
-      <Footer  />
-    </Container> */}
-    {/* <div className="w-full text-center border-t border-grey p-4 sticky bottom-0">
-    <Footer />    
-    </div> */}
-    
-
-    {/* <Container>
-    Id: {acidData.id}
-    <br />
-    {acidData.length}
-    <br />
-    {acidData.protein_name}
-    </Container> */}
+      <Footer />
     </div>
+    </>
+    
     
   );
 }
