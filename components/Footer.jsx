@@ -6,8 +6,7 @@ import { Container } from '@/components/Container'
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-50">
-      <Container>
+    <footer className="bg-slate-50" >
         <div className="py-2">
           {/* <Logo className="mx-auto h-10 w-auto" /> */}
           {/* <nav className="mt-10 text-sm" aria-label="quick links">
@@ -43,7 +42,7 @@ export default function Footer() {
             reserved.
           </p>
         </div>
-      </Container>
+      {/* </Container> */}
     </footer>
   )
 }
