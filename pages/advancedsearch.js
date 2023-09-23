@@ -13,6 +13,8 @@ export default function AdvanceSearch() {
     const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
     // const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
     // console.log(res_protein_name.data, res_protein_source.data, res_uniprotid.data)
+    if((res_protein_name.isLoading && res_protein_name.isLoading && res_protein_name.isLoading)) { return <>Loading</>}
+    if((res_protein_name.error && res_protein_name.error && res_protein_name.error)) { return <>Error</>}
 
     return (
         <>
@@ -24,110 +26,228 @@ export default function AdvanceSearch() {
             <Container>
             <form method="get" action="/api/processform">
                 <div className="space-y-12">
+
+                        {/* Section 1 */}
                         <div className="border-b border-gray-900/10 pb-12">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900">Protein Information</h2>
-                        <p className="mt-1 text-sm leading-6 text-gray-600">
-                            TODO: description here
-                        </p>
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">Protein Information</h2>
+                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                TODO: description here
+                            </p>
 
-                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
-                                <>
-                                {/* default, combobox, label, isBtnHidden */}
-                                <ComboBox isBtnHidden={true} label={"name"} name={"name"}  className={"col-span-full"} combobox={res_protein_name.data.data} />
-                                <ComboBox isBtnHidden={true} label={"source"} name={"source"}  className={"col-span-full"} combobox={res_protein_source.data.data}/>
-                                <ComboBox isBtnHidden={true} label={"uniprot"} name={"uniprot"}  className={"col-span-full"} combobox={res_uniprotid.data.data} />
-                                {/* <AdvancedComboBox label={"Mutation"}  className={"col-span-full"}/> */}
-                                </>
-                        )}
-                           
-                            
+                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
+                                        <>
+                                        {/* default, combobox, label, isBtnHidden */}
+                                        <ComboBox isBtnHidden={true} label={"name"} name={"name"}  className={"col-span-full"} combobox={res_protein_name.data.data} />
+                                        <ComboBox isBtnHidden={true} label={"source"} name={"source"}  className={"col-span-full"} combobox={res_protein_source.data.data}/>
+                                        <ComboBox isBtnHidden={true} label={"uniprot"} name={"uniprot"}  className={"col-span-full"} combobox={res_uniprotid.data.data} />
+                                        {/* <ComboBox  isBtnHidden={true} label={"mutation"}  name={"mutation"} className={"col-span-full"}/> */}
+                                        </>
+                                )}
+                                    
+                                    <div className="sm:col-span-2">
+                                        <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            Length
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="length"
+                                            id="from"
+                                            placeholder="From"
+                                            autoComplete="given-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
 
-                            <div className="sm:col-span-2">
-                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Temperature
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                type="number"
-                                name="from"
-                                id="from"
-                                placeholder="From"
-                                autoComplete="given-name"
-                                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
                             </div>
-                            </div>
-
-
-                            <div className="sm:col-span-2">
-                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                &nbsp;
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                type="number"
-                                name="to"
-                                id="to"
-                                placeholder="To"
-                                autoComplete="family-name"
-                                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                            </div>
-
-
-                            {/* <div className="sm:col-span-4">
-                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                                Username
-                            </label>
-                            <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
-                                <input
-                                    type="text"
-                                    name="username"
-                                    id="username"
-                                    autoComplete="username"
-                                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="janesmith"
-                                />
-                                </div>
-                            </div>
-                            </div>
-
-                            <div className="col-span-full">
-                            <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                                About
-                            </label>
-                            <div className="mt-2">
-                                <textarea
-                                id="about"
-                                name="about"
-                                rows={3}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                defaultValue={''}
-                                />
-                            </div>
-                            <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
-                            </div>
-
-                            <div className="col-span-full">
-                            <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
-                                Photo
-                            </label>
-                            <div className="mt-2 flex items-center gap-x-3">
-                                <UserCircleIcon className="h-12 w-12 text-gray-300" aria-hidden="true" />
-                                <button
-                                type="button"
-                                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                >
-                                Change
-                                </button>
-                            </div>
-                            </div> */}
-
                         </div>
+
+                        {/* Section 2 */}
+                        <div className="border-b border-gray-900/10 pb-12">
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">Nucleic Acid</h2>
+                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                TODO: description here
+                            </p>
+
+                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
+                                        <>
+                                        {/* default, combobox, label, isBtnHidden */}
+                                        <ComboBox isBtnHidden={true} label={"Nucleaic Acid"} name={"nuc_acid"}  className={"col-span-full"} combobox={res_protein_name.data.data} />
+                                        <ComboBox isBtnHidden={true} label={"Type"} name={"type"}  className={"col-span-full"} combobox={res_protein_source.data.data}/>
+
+                                        </>
+                                )}
+                                   
+
+                            </div>
+                        </div>
+
+                        {/* Section 3 */}
+                        <div className="border-b border-gray-900/10 pb-12">
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">Experimental Condition</h2>
+                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                TODO: description here
+                            </p>
+
+                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
+                                        <>
+                                        {/* default, combobox, label, isBtnHidden */}
+                                        <ComboBox isBtnHidden={true} label={"Method"} name={"method"}  className={"col-span-full"} combobox={res_protein_name.data.data} />
+
+                                        <div className="sm:col-span-3">
+                                        <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            Temperature
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_from"
+                                            id="temp_from"
+                                            placeholder="From"
+                                            autoComplete="given-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+
+
+                                    <div className="sm:col-span-3">
+                                        <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            &nbsp;
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_to"
+                                            id="temp_to"
+                                            placeholder="To"
+                                            autoComplete="family-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="sm:col-span-3">
+                                        <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            pH
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_from"
+                                            id="temp_from"
+                                            placeholder="From"
+                                            autoComplete="given-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+
+
+                                    <div className="sm:col-span-3">
+                                        <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            &nbsp;
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_to"
+                                            id="temp_to"
+                                            placeholder="To"
+                                            autoComplete="family-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+                                        </>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Section 4 */}
+                        <div className="border-b border-gray-900/10 pb-12">
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">Thermodynamic Parameters</h2>
+                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                TODO: description here
+                            </p>
+
+                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
+                                        <>
+                                        {/* default, combobox, label, isBtnHidden */}
+
+                                        <div className="sm:col-span-3">
+                                        <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            dG_wild
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_from"
+                                            id="temp_from"
+                                            placeholder="From"
+                                            autoComplete="given-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+
+
+                                    <div className="sm:col-span-3">
+                                        <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            &nbsp;
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_to"
+                                            id="temp_to"
+                                            placeholder="To"
+                                            autoComplete="family-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="sm:col-span-3">
+                                        <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            ddG
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_from"
+                                            id="temp_from"
+                                            placeholder="From"
+                                            autoComplete="given-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+
+
+                                    <div className="sm:col-span-3">
+                                        <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            &nbsp;
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="temp_to"
+                                            id="temp_to"
+                                            placeholder="To"
+                                            autoComplete="family-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+                                        </>
+                                )}
+                            </div>
                         </div>
 
                         {/* <div className="border-b border-gray-900/10 pb-12">
