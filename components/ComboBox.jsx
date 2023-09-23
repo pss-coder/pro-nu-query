@@ -10,21 +10,23 @@ function classNames(...classes) {
 }
 
 export default function ComboBox({ className, ...props }) {
+  // props: default, combobox, label
   const [query, setQuery] = useState('')
+  const [selectedPerson, setSelectedPerson] = useState(props.default != null ? props.default : props.combobox[0].search)
 
   var filtered =
     query === ''
-      ? props.comboBox
-      : props.comboBox.filter((value) => {
+      ? props.combobox
+      : props.combobox.filter((value) => {
           return value.search.toLowerCase().includes(query.toLowerCase())
   })
 
   return (
-    <Combobox className={clsx('', className)} as="div" value={props.selected} onChange={props.setSelected}>
+    <Combobox className={clsx('', className)} as="div" value={selectedPerson} onChange={setSelectedPerson}>
       <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">{props.label}</Combobox.Label>
       <div className="relative mt-2">
         <Combobox.Input
-          name='value'
+          name={props.name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           displayValue={(text) => text}
           onChange={(event) => setQuery(event.target.value)}
@@ -35,7 +37,14 @@ export default function ComboBox({ className, ...props }) {
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
         </Combobox.Button>
 
-        <div className="absolute inset-y-0 right-0 flex items-center rounded-r-md  focus:outline-none">
+        {!props.isBtnHidden && (
+          <div className="absolute inset-y-0 right-0 flex items-center rounded-r-md  focus:outline-none">
+          <button
+          type='submit'
+          className="relative -ml-px inline-flex items-center rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          >
+            <BarsArrowUpIcon className="-ml-0.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+          </button>
             {/* <Link
             href={{
               pathname: '/results',
@@ -52,6 +61,8 @@ export default function ComboBox({ className, ...props }) {
           <BarsArrowUpIcon className="-ml-0.5 h-5 w-5 text-gray-400" aria-hidden="true" />
         </Link> */}
         </div>
+        )}
+        
 
        
         {filtered.length > 0 && (

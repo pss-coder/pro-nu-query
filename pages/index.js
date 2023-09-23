@@ -21,7 +21,7 @@ export default function Home() {
       {/* TODO: Version 3 */}
       <Container className="text-center">
       <Link
-        href="/advancesearch"
+        href="/advancedsearch"
         type="button"
         className="rounded-md bg-indigo-50 m-5 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
       >

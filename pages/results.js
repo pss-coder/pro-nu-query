@@ -41,6 +41,11 @@ const dummyData = [ {
   }
 ]
 
+function handleQuery(query) {
+    // check if it is simple search or advance
+    const isSimple = query.issimple == 'true'
+}
+
 /***
  data.count <- tells us how many rows there are
  data.count / 10 <- how many pages we need
@@ -49,23 +54,21 @@ const dummyData = [ {
   */ 
 
 export default function Results() {
-    const router = useRouter()
-    const {colindex,column, value} = router.query
-    const isQueryPresent = column && value
-    
-    // name=${Name}&source=${Source}&uniprot=${value}&mutation=${Mutation}&from=${from}&to=${to}
-    const {name, source, uniprot, from, to} = router.query
-    console.log(router.query)
-
-    const isAdvancedSearch = !isQueryPresent
-    // denote page number
     const [page,setPage] = useState(0)
 
+    // Handle Simple Query
+    const router = useRouter()
+    const {colindex,column, value, issimple} = router.query
+    const isSimpleSearch = router.query.issimple == 'true' ? true : false
+    
+    const {name, source, uniprot, from, to} = router.query
+    const isAdvancedSearch = !isSimpleSearch
+    
+
     const { data, error, isLoading } = useSWR( 
-        isQueryPresent ? '/api/search?'+new URLSearchParams({column, value,page}).toString() : 
-        isAdvancedSearch ? '/api/advancesearch?'+ new URLSearchParams({name, source, uniprot, from, to}) : null, 
-        isQueryPresent ? fetcher : 
-        isAdvancedSearch ? fetcher : null)
+        isSimpleSearch ? '/api/search?'+new URLSearchParams({issimple,column, value,page}).toString() : 
+        isAdvancedSearch ? '/api/search?'+ new URLSearchParams({name, source, uniprot, from, to, page}) : null, 
+        fetcher)
     
     if (error) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>

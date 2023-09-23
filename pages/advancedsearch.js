@@ -1,4 +1,4 @@
-import AdvancedComboBox from "@/components/AdvancedComboBox";
+import ComboBox from "@/components/ComboBox";
 import { Container } from "@/components/Container";
 import Header from "@/components/Header";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/20/solid";
@@ -22,7 +22,7 @@ export default function AdvanceSearch() {
 
             <Header />
             <Container>
-            <form method="get" action="/api/searchform">
+            <form method="get" action="/api/processform">
                 <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Protein Information</h2>
@@ -33,9 +33,10 @@ export default function AdvanceSearch() {
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
                                 <>
-                                <AdvancedComboBox label={"Name"}  className={"col-span-full"} combobox={res_protein_name.data.data}/>
-                                <AdvancedComboBox label={"Source"}  className={"col-span-full"} combobox={res_protein_source.data.data}/>
-                                <AdvancedComboBox label={"UniProt"}  className={"col-span-full"} combobox={res_uniprotid.data.data} />
+                                {/* default, combobox, label, isBtnHidden */}
+                                <ComboBox isBtnHidden={true} label={"name"} name={"name"}  className={"col-span-full"} combobox={res_protein_name.data.data} />
+                                <ComboBox isBtnHidden={true} label={"source"} name={"source"}  className={"col-span-full"} combobox={res_protein_source.data.data}/>
+                                <ComboBox isBtnHidden={true} label={"uniprot"} name={"uniprot"}  className={"col-span-full"} combobox={res_uniprotid.data.data} />
                                 {/* <AdvancedComboBox label={"Mutation"}  className={"col-span-full"}/> */}
                                 </>
                         )}
@@ -44,7 +45,7 @@ export default function AdvanceSearch() {
 
                             <div className="sm:col-span-2">
                             <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Temp
+                                Temperature
                             </label>
                             <div className="mt-2">
                                 <input
