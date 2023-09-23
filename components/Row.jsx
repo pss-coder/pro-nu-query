@@ -79,26 +79,26 @@ Const tabs = [
 */
 
 
-function displayProteinInfo(name) {
+function displayProteinInfo(protein_name, protein_source,sequence,length, uniprot_id, mutation) {
     return (
         <div className="mt-6 lg:col-span-5 lg:mt-0">
             <h3 className="text-lg font-medium text-gray-900">Protein Name</h3>
-            <p className="mt-2 text-sm text-gray-500">{name}</p>
+            <p className="mt-2 text-sm text-gray-500">{protein_name}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Protein Source</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{protein_source}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Sequence</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{sequence}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Length</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{length}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Uniprot Id</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{uniprot_id}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Mutation</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{mutation}</p>
         </div>
     )
 }
@@ -116,48 +116,46 @@ function displayNucleicAcid(nucleic_acid_name, type_nuc) {
     )
 }
 
-function displayComplexInformation() {}
-
-function displayExperimentalConditions() {
+function displayExperimentalConditions(pH, temperature, method) {
     return (
         <div className="mt-6 lg:col-span-5 lg:mt-0">
             <h3 className="text-lg font-medium text-gray-900">pH</h3>
-            <p className="mt-2 text-sm text-gray-500">Todo</p>
+            <p className="mt-2 text-sm text-gray-500">{pH}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Temperature (K)</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{temperature}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Method</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{method}</p>
 
             {/* ΔG Wild type(kcal/mol) */}
         </div>
     )
 }
 
-function displayThermodynamicParameters() {
+function displayThermodynamicParameters(dG, ddG) {
     return (
         <div className="mt-6 lg:col-span-5 lg:mt-0">
             <h3 className="text-lg font-medium text-gray-900">ΔG Wild type(kcal/mol)</h3>
-            <p className="mt-2 text-sm text-gray-500">Todo</p>
+            <p className="mt-2 text-sm text-gray-500">{dG}</p>
 
-            <h3 className="mt-4 text-lg font-medium text-gray-900">ddG ??</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <h3 className="mt-4 text-lg font-medium text-gray-900">ΔΔG</h3>
+            <p className="mt-2 text-sm text-gray-500">{ddG}</p>
         </div>
     )
 }
 
-function displayReferences() {
+function displayReferences(year, authors, journal) {
     return (
         <div className="mt-6 lg:col-span-5 lg:mt-0">
             <h3 className="text-lg font-medium text-gray-900">Year</h3>
-            <p className="mt-2 text-sm text-gray-500">Todo</p>
+            <p className="mt-2 text-sm text-gray-500">{year}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Authors</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{authors}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Journal</h3>
-            <p className="mt-2 text-sm text-gray-500">TODO</p>
+            <p className="mt-2 text-sm text-gray-500">{journal}</p>
         </div>
     )
 }
@@ -170,13 +168,15 @@ function classNames(...classes) {
 }
 
 export default function Row({data}) {
+  console.log(data)
     const [tabs, setTabs] = useState(
         [
           {name: 'Protein'},
           {name: 'Nucleic Acid'},
-          {name: 'Complex Information'},
+          // {name: 'Complex Information'},
           {name: 'Experimental Conditions'},
           {name: 'Thermodynamic Parameters'},
+          {name: 'References'},
         ]
       )
 
@@ -227,11 +227,11 @@ export default function Row({data}) {
                     
                     <div key={tab.name + index} className="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8">
 
-                        {tab.name == 'Protein' && <> {displayProteinInfo(data.protein_name)} </>}
+                        {tab.name == 'Protein' && <> {displayProteinInfo(data.protein_name, data.protein_source,"sequence todo", data.length, data.uniprot_id, data.mutation_protein)} </>}
                         {tab.name == 'Nucleic Acid' && <> {displayNucleicAcid(data.nucleic_acid_name, data.type_nuc)}</>}
-                        {tab.name == 'Complex Information' && <>{displayComplexInformation()}</>}
-                        {tab.name == 'Experimental Conditions' && <>{displayExperimentalConditions()}</>}
-                        {tab.name == 'Thermodynamic Parameters' && <>{displayThermodynamicParameters()}</>}
+                        {tab.name == 'Experimental Conditions' && <>{displayExperimentalConditions(data.pH, data.temperature, data.method)}</>}
+                        {tab.name == 'Thermodynamic Parameters' && <>{displayThermodynamicParameters(data.dG_wild_kcal_mol_, data.ddG)}</>}
+                        {tab.name == 'References' && <>{displayReferences(data.year, data.authors, data.journal)}</>}
 
                     </div>
 

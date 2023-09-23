@@ -32,6 +32,15 @@ function protein_info_filter(protein_name, protein_source, uniprot_id, from, to)
 export default async function handler(req, res) {
     const prisma = new PrismaClient()
 
+    // For View All
+    if(req.query.all && req.query.page) { //for view all
+        var result = await prisma.project.findMany({take: 10,skip: 10*req.query.page})
+        const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+        const data = JSON.parse(fix_bigINT_data)
+        res.status(200).json({data: data})
+        return
+    }
+
     if(req.query.issimple == 'true') {
         // For Simple Search
     const {column, value, page} = req.query

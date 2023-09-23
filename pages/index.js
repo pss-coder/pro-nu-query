@@ -28,12 +28,13 @@ export default function Home() {
         Advanced Search
       </Link>
 
-      <button
+      <Link
+        href="/viewall"
         type="button"
         className="rounded-md bg-indigo-50 m-5 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
       >
         View All Data
-      </button>
+      </Link>
       </Container>
 
       </main>
