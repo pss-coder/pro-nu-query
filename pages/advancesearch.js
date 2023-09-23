@@ -3,9 +3,16 @@ import { Container } from "@/components/Container";
 import Header from "@/components/Header";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 import Head from "next/head";
+import useSWR from "swr";
 
 export default function AdvanceSearch() {
     // Pass Columns into search
+    const fetcher = (url) => fetch(url).then((res) => res.json());
+    const res_protein_name = useSWR('/api/column?name=protein_name',fetcher)
+    const res_protein_source = useSWR('/api/column?name=protein_source',fetcher)
+    const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
+    // const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
+    // console.log(res_protein_name.data, res_protein_source.data, res_uniprotid.data)
 
     return (
         <>
@@ -15,7 +22,7 @@ export default function AdvanceSearch() {
 
             <Header />
             <Container>
-            <form method="post" action="/api/advancesearch">
+            <form method="get" action="/api/searchform">
                 <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Protein Information</h2>
@@ -24,10 +31,16 @@ export default function AdvanceSearch() {
                         </p>
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <AdvancedComboBox label={"Name"}  className={"col-span-full"}/>
-                            <AdvancedComboBox label={"Source"}  className={"col-span-full"}/>
-                            <AdvancedComboBox label={"UniProt"}  className={"col-span-full"}/>
-                            <AdvancedComboBox label={"Mutation"}  className={"col-span-full"}/>
+                        {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
+                                <>
+                                <AdvancedComboBox label={"Name"}  className={"col-span-full"} combobox={res_protein_name.data.data}/>
+                                <AdvancedComboBox label={"Source"}  className={"col-span-full"} combobox={res_protein_source.data.data}/>
+                                <AdvancedComboBox label={"UniProt"}  className={"col-span-full"} combobox={res_uniprotid.data.data} />
+                                {/* <AdvancedComboBox label={"Mutation"}  className={"col-span-full"}/> */}
+                                </>
+                        )}
+                           
+                            
 
                             <div className="sm:col-span-2">
                             <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">

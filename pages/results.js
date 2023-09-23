@@ -52,13 +52,20 @@ export default function Results() {
     const router = useRouter()
     const {colindex,column, value} = router.query
     const isQueryPresent = column && value
+    
+    // name=${Name}&source=${Source}&uniprot=${value}&mutation=${Mutation}&from=${from}&to=${to}
+    const {name, source, uniprot, from, to} = router.query
+    console.log(router.query)
 
+    const isAdvancedSearch = !isQueryPresent
     // denote page number
     const [page,setPage] = useState(0)
 
     const { data, error, isLoading } = useSWR( 
-        isQueryPresent ? '/api/search?'+new URLSearchParams({column, value,page}).toString() : null, 
-        isQueryPresent ? fetcher : null)
+        isQueryPresent ? '/api/search?'+new URLSearchParams({column, value,page}).toString() : 
+        isAdvancedSearch ? '/api/advancesearch?'+ new URLSearchParams({name, source, uniprot, from, to}) : null, 
+        isQueryPresent ? fetcher : 
+        isAdvancedSearch ? fetcher : null)
     
     if (error) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
