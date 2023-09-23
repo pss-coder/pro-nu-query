@@ -61,13 +61,19 @@ export default function Results() {
     const {colindex,column, value, issimple} = router.query
     const isSimpleSearch = router.query.issimple == 'true' ? true : false
     
-    const {name, source, uniprot, from, to} = router.query
+    // const {name, source, uniprot, from, to} = router.query
+    // console.log(router.query)
+    
     const isAdvancedSearch = !isSimpleSearch
+    var qury = router.query
+    qury.page = page
+
+    
     
 
     const { data, error, isLoading } = useSWR( 
         isSimpleSearch ? '/api/search?'+new URLSearchParams({issimple,column, value,page}).toString() : 
-        isAdvancedSearch ? '/api/search?'+ new URLSearchParams({name, source, uniprot, from, to, page}) : null, 
+        isAdvancedSearch ? '/api/search?'+ new URLSearchParams(qury) : null, 
         fetcher)
     
     if (error) return <div>failed to load</div>

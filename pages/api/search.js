@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client"
 const query = {}
 query.where = {}
 
-function protein_info_filter(protein_name, protein_source, uniprot_id, from, to) {
+function protein_info_filter(protein_name, protein_source, uniprot_id, length_from, length_to) {
     // check 
     
     if (protein_name) {
@@ -20,12 +20,60 @@ function protein_info_filter(protein_name, protein_source, uniprot_id, from, to)
     if (protein_source) {
         query.where.protein_source = protein_source
     }
-    if (from != '' && to != '') {
-        query.where.temperature = {
-            gte: parseFloat(from),
-            lte: parseFloat(to)
+    if (length_from && length_to) {
+        query.where.length = {
+            gte: BigInt(length_from),
+            lte: BigInt(length_to)
         }
     }
+}
+
+function nuc_acid_filter(nuc_acid, type) {
+    if(nuc_acid) {
+        query.where.nucleic_acid_name = nuc_acid
+    }
+    if(type) {
+        query.where.type_nuc = type
+    }
+}
+
+function experimental_condition_filter(method, temp_from, temp_to, ph_from, ph_to) {
+    if (temp_from && temp_to) {
+        query.where.temperature = {
+            gte: parseFloat(temp_from),
+            lte: parseFloat(temp_to)
+        }
+    }
+    if (ph_from && ph_to) {
+        query.where.pH = {
+            gte: parseFloat(ph_from),
+            lte: parseFloat(ph_to)
+        }
+    }
+
+    if(method) {
+        query.where.method = method
+    }
+
+
+}
+
+function thermo_param_filter(dg_wild_from, dg_wild_to, ddg_from, ddg_to) {
+    
+    if (dg_wild_from && dg_wild_to) {
+        query.where.dG_wild_kcal_mol_ = {
+            gte: parseFloat(dg_wild_from),
+            lte: parseFloat(dg_wild_to)
+        }
+    }
+
+    if (ddg_from && ddg_to) {
+        query.where.ddG = {
+            gte: parseFloat(ddg_from),
+            lte: parseFloat(ddg_to)
+        }
+    }
+
 }
 
 // display rows after search
@@ -81,8 +129,12 @@ export default async function handler(req, res) {
 
     // For Advance Search
     // retrieve data from query?
-    const {name, source, uniprot, from, to, page} = req.query
-    console.log(req.query)
+    const {name, source, uniprot, length_from, length_to,
+        nuc_acid, type,
+        method, temp_from, temp_to, ph_from, ph_to,
+        dg_wild_from, dg_wild_to, ddg_from, ddg_to, page
+    } = req.query
+
     // protein_name	protein_source	uniprot_id	mutation_protein temperature
 
 
@@ -97,16 +149,25 @@ export default async function handler(req, res) {
     // References: year	authors	journal
     
 
-    protein_info_filter(name,source,uniprot,from,to)
+    protein_info_filter(name,source,uniprot,length_from,length_to)
+    
+    nuc_acid_filter(nuc_acid, type);
+
+    experimental_condition_filter(method, temp_from, temp_to, ph_from, ph_to)
+
+    thermo_param_filter(dg_wild_from, dg_wild_to, ddg_from, ddg_to)
+
     // TODO: add the other filters
     
     query.take = 10
     query.skip = 10*page
+
+    console.log(query)
+
     var result = await prisma.project.findMany(query)
 
     const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
-    const data = JSON.parse(fix_bigINT_data)
-    console.log(data)
+    const data = JSON.parse(fix_bigINT_data)    
 
     res.status(200).json({data: data})
 

@@ -14,7 +14,11 @@ export default async function handler(req, res) {
     }
 
    // Process Advance Search
-    const {name, source, uniprot, from, to} = req.query
+    const {name, source, uniprot, length_from, length_to,
+        nuc_acid, type,
+        method, temp_from, temp_to, ph_from, ph_to,
+        dg_wild_from, dg_wild_to, ddg_from, ddg_to
+    } = req.query
     // id	
 
     // Protein Information: protein_name protein_source length mutation_protein		uniprot_id	
@@ -27,7 +31,9 @@ export default async function handler(req, res) {
 
     // References: year	authors	journal
     if(name) {
-        res.redirect(307, `/results/?name=${name}&source=${source}&uniprot=${uniprot}&from=${from}&to=${to}`)
+        const url = '/results/?'+new URLSearchParams(req.query).toString()
+        // `/results/?name=${name}&source=${source}&uniprot=${uniprot}&from=${from}&to=${to}
+        res.redirect(307, url)
         return
     }
 }

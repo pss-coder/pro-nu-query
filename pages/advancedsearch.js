@@ -11,6 +11,11 @@ export default function AdvanceSearch() {
     const res_protein_name = useSWR('/api/column?name=protein_name',fetcher)
     const res_protein_source = useSWR('/api/column?name=protein_source',fetcher)
     const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
+
+    const res_nuc_acid_name = useSWR('/api/column?name=nucleic_acid_name',fetcher)
+    const res_type_nuc = useSWR('/api/column?name=type_nuc',fetcher)
+
+    const res_method = useSWR('/api/column?name=method',fetcher)
     // const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
     // console.log(res_protein_name.data, res_protein_source.data, res_uniprotid.data)
     if((res_protein_name.isLoading && res_protein_name.isLoading && res_protein_name.isLoading)) { return <>Loading</>}
@@ -52,11 +57,27 @@ export default function AdvanceSearch() {
                                         <div className="mt-2">
                                             <input
                                             type="number"
-                                            name="length"
-                                            id="from"
+                                            name="length_from"
+                                            id="length_from"
                                             placeholder="From"
                                             autoComplete="given-name"
                                             className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="sm:col-span-2">
+                                        <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                            &nbsp;
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                            type="number"
+                                            name="length_to"
+                                            id="length_to"
+                                            placeholder="To"
+                                            autoComplete="family-name"
+                                            className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                             />
                                         </div>
                                     </div>
@@ -72,11 +93,11 @@ export default function AdvanceSearch() {
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
+                                {(res_nuc_acid_name.data && res_type_nuc.data) && (
                                         <>
                                         {/* default, combobox, label, isBtnHidden */}
-                                        <ComboBox isBtnHidden={true} label={"Nucleaic Acid"} name={"nuc_acid"}  className={"col-span-full"} combobox={res_protein_name.data.data} />
-                                        <ComboBox isBtnHidden={true} label={"Type"} name={"type"}  className={"col-span-full"} combobox={res_protein_source.data.data}/>
+                                        <ComboBox isBtnHidden={true} label={"Nucleaic Acid"} name={"nuc_acid"}  className={"col-span-full"} combobox={res_nuc_acid_name.data.data} />
+                                        <ComboBox isBtnHidden={true} label={"Type"} name={"type"}  className={"col-span-full"} combobox={res_type_nuc.data.data}/>
 
                                         </>
                                 )}
@@ -93,10 +114,10 @@ export default function AdvanceSearch() {
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                {(res_protein_name.data && res_protein_name.data && res_uniprotid.data) && (
+                                {(res_method.data) && (
                                         <>
                                         {/* default, combobox, label, isBtnHidden */}
-                                        <ComboBox isBtnHidden={true} label={"Method"} name={"method"}  className={"col-span-full"} combobox={res_protein_name.data.data} />
+                                        <ComboBox isBtnHidden={true} label={"Method"} name={"method"}  className={"col-span-full"} combobox={res_method.data.data} />
 
                                         <div className="sm:col-span-3">
                                         <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -138,8 +159,8 @@ export default function AdvanceSearch() {
                                         <div className="mt-2">
                                             <input
                                             type="number"
-                                            name="temp_from"
-                                            id="temp_from"
+                                            name="ph_from"
+                                            id="ph_from"
                                             placeholder="From"
                                             autoComplete="given-name"
                                             className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -155,8 +176,8 @@ export default function AdvanceSearch() {
                                         <div className="mt-2">
                                             <input
                                             type="number"
-                                            name="temp_to"
-                                            id="temp_to"
+                                            name="ph_to"
+                                            id="ph_to"
                                             placeholder="To"
                                             autoComplete="family-name"
                                             className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -187,8 +208,8 @@ export default function AdvanceSearch() {
                                         <div className="mt-2">
                                             <input
                                             type="number"
-                                            name="temp_from"
-                                            id="temp_from"
+                                            name="dg_wild_from"
+                                            id="dg_wild_from"
                                             placeholder="From"
                                             autoComplete="given-name"
                                             className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -204,8 +225,8 @@ export default function AdvanceSearch() {
                                         <div className="mt-2">
                                             <input
                                             type="number"
-                                            name="temp_to"
-                                            id="temp_to"
+                                            name="dg_wild_to"
+                                            id="dg_wild_to"
                                             placeholder="To"
                                             autoComplete="family-name"
                                             className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -220,8 +241,8 @@ export default function AdvanceSearch() {
                                         <div className="mt-2">
                                             <input
                                             type="number"
-                                            name="temp_from"
-                                            id="temp_from"
+                                            name="ddg_from"
+                                            id="ddg_from"
                                             placeholder="From"
                                             autoComplete="given-name"
                                             className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -237,8 +258,8 @@ export default function AdvanceSearch() {
                                         <div className="mt-2">
                                             <input
                                             type="number"
-                                            name="temp_to"
-                                            id="temp_to"
+                                            name="ddg_to"
+                                            id="ddg_to"
                                             placeholder="To"
                                             autoComplete="family-name"
                                             className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
