@@ -104,7 +104,7 @@ export default function Results() {
                 <Header />
             
                 <Container>
-                    <SearchField columnIndex={colindex} value={value} />
+                    {isSimpleSearch && <SearchField columnIndex={colindex} value={value} /> }
                     <Table results={data.data} />
                     <Pagination page={page} setPage={setPage} length={data.data.length} />
                 </Container>
