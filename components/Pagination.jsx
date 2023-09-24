@@ -21,7 +21,10 @@ const items = [
       disableFront = false
     } else {
       //51 - 1 = 50
-      startIndex = total - length
+      startIndex = total - length + 1
+      if(startIndex == 1) {
+        startIndex = length
+      }
       endIndex = total
       disableFront = true
     }
