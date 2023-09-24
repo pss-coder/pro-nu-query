@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
 const query = {}
 query.where = {}
@@ -78,7 +78,7 @@ function thermo_param_filter(dg_wild_from, dg_wild_to, ddg_from, ddg_to) {
 
 // display rows after search
 export default async function handler(req, res) {
-    const prisma = new PrismaClient()
+    var count = 0; // for total count of results
 
     // For View All
     if(req.query.all && req.query.page) { //for view all
@@ -95,7 +95,10 @@ export default async function handler(req, res) {
     if(!column || !value || !page) {
         return res.status(400).json({ error: { message:  'No result found' } })
     }
-    var result = null
+
+    var result = null;
+    
+
     if(column == 'protein_name') {
         result = await prisma.project.findMany({
             where: {
@@ -106,6 +109,16 @@ export default async function handler(req, res) {
             take: 10,
             skip: 10*page
           })
+
+        var cr = await prisma.project.findMany({
+            where: {
+                'protein_name': {
+                    hasSome: [value]
+                }
+            },
+          })
+        count = cr.length
+
     } else {
         result = await prisma.project.findMany({
             where: {
@@ -116,12 +129,24 @@ export default async function handler(req, res) {
             take: 10,
             skip: 10*page
           })
+
+        var cr = await prisma.project.findMany({
+            where: {
+                [column]: {
+                    equals: value
+                }
+            },
+          })
+
+        count = cr.length
     }
+
+
     
     const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
     const data = JSON.parse(fix_bigINT_data)
     if(data.length > 0 ) {
-        return res.status(200).json({data: data})
+        return res.status(200).json({data: data, total_count: count})
     } else {
         return res.status(400).json({ error: { message:  'No result found' } })
     }
@@ -158,18 +183,29 @@ export default async function handler(req, res) {
     thermo_param_filter(dg_wild_from, dg_wild_to, ddg_from, ddg_to)
 
     // TODO: add the other filters
+
+
     
     query.take = 10
     query.skip = 10*page
 
-    console.log(query)
+    // console.log(query)
 
     var result = await prisma.project.findMany(query)
+
+
+    delete query.take
+    delete query.skip
+    var cr = await prisma.project.findMany(query)
+    count = cr.length
+    console.log(count)
+
+    
 
     const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
     const data = JSON.parse(fix_bigINT_data)    
 
-    res.status(200).json({data: data})
+    res.status(200).json({data: data, total_count: count})
 
 
 

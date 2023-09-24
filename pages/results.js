@@ -81,8 +81,9 @@ export default function Results() {
     if (error) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
     // return <div>hello {data.data[0].id}!</div>
-    if (data) { 
+    if (data.data.length && data.data.length > 0) { 
         // # of items from data
+        
         
         return (
         <>
@@ -106,7 +107,7 @@ export default function Results() {
                 <Container>
                     {isSimpleSearch && <SearchField columnIndex={colindex} value={value} /> }
                     <Table results={data.data} />
-                    <Pagination page={page} setPage={setPage} length={data.data.length} />
+                    <Pagination page={page} setPage={setPage} length={data.data.length} total={data.total_count} />
                 </Container>
             </main>
 
