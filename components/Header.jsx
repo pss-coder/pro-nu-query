@@ -24,8 +24,8 @@ export default function Header() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">ProNuQuery</span>
-            <h1 className='h-8 w-auto text-1xl text-slate-400 font-bold'>ProNuQuery</h1>
+            <span className="sr-only indigo">ProNuQuery</span>
+            <h1 className='h-8 w-auto text-1xl text-indigo-700 font-bold'>ProNuQuery</h1>
             {/* <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" /> */}
           </Link>
         </div>
