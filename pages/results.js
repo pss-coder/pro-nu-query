@@ -7,7 +7,7 @@ import Table from "@/components/Table";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr"
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -83,30 +83,20 @@ export default function Results() {
     // return <div>hello {data.data[0].id}!</div>
     if (data.data.length && data.data.length > 0) { 
         // # of items from data
-        
-        
         return (
         <>
-            {/* <ul>
-                {data.data.map((row) => {
-                    return (
-                        <div key={row.id}>
-                        <Link href={'/acids/'+row.id}>{row.id} {row.protein_name} {row.protein_source} {row.length} {row.dG_wild_kcal_mol_} {row.nucleic_acid_name}</Link>
-                        </div>
-                    )})}
-                    <br />
-            </ul> */}
             <Head>
-                <title>ProNuQuery</title>
+                <title>Results: {data.total_count}</title>
             </Head>
 
-            <div className="flex flex-col min-h-screen"> {/* Use a div wrapper with flex and flex-col */}
+            <div className="flex flex-col min-h-screen min-w-full"> {/* Use a div wrapper with flex and flex-col */}
+            <Header />
             <main className='flex-grow'>
-                <Header />
-            
-                <Container>
+                <Container className="pt-4 pb-16 text-center lg:pt-5">
                     {isSimpleSearch && <SearchField columnIndex={colindex} value={value} /> }
+
                     <Table results={data.data} />
+
                     <Pagination page={page} setPage={setPage} length={data.data.length} total={data.total_count} />
                 </Container>
             </main>
@@ -114,21 +104,7 @@ export default function Results() {
             <Footer />
             </div>
 
-
-            
         </>
     )
     }
-
-    return (
-        <>
-        <Header />
-            <Container>
-            <Table results={dummyData} />
-            {/* <Pagination /> */}
-            </Container>
-            
-        </>
-
-    )
 }
