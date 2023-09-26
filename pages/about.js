@@ -20,7 +20,7 @@ export default function About() {
             🛠️ My tech toolbox includes React, Next.js, Tailwind CSS, Prisma, and PostgreSQL hosted on DigitalOcean.
           </p>
           <p className="text-lg mb-4">
-            🤓 One of the key lessons I&apos;ve learned is the importance of data. I've discovered that cleaning and understanding data.
+            🤓 One of the key lessons I&apos;ve learned is the importance of data. I&apos;ve discovered that cleaning and understanding data.
           </p>
           <Link href="/"
             className="text-blue-600 hover:underline">
