@@ -37,7 +37,7 @@ export default function AdvanceSearch() {
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Protein Information</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                            This section collects information related to the protein involved in the interaction. It typically includes details such as the protein&apos;s name, source organism, length (number of amino acids), if applicable. This information is essential for characterizing the protein's identity and state.
+                            This section collects information related to the protein involved in the interaction. It typically includes details such as the protein&apos;s name, source organism, length (number of amino acids), if applicable. This information is essential for characterizing the protein&apos;s identity and state.
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -90,7 +90,7 @@ export default function AdvanceSearch() {
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Nucleic Acid</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                            The Nucleic Acid section focuses on gathering details about the nucleic acid component of the interaction. It commonly includes the nucleic acid's name or description, its type (e.g., DNA or RNA). This information helps identify the nature of the genetic material involved.
+                            The Nucleic Acid section focuses on gathering details about the nucleic acid component of the interaction. It commonly includes the nucleic acid&apos;s name or description, its type (e.g., DNA or RNA). This information helps identify the nature of the genetic material involved.
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

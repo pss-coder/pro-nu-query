@@ -11,7 +11,7 @@ export default function About() {
             Welcome to my world of coding and learning. Let me introduce myself:
           </p>
           <p className="text-lg mb-4">
-            📚 I'm a final year Computer Science student.
+            📚 I&apos;m a final year Computer Science student.
           </p>
           <p className="text-lg mb-4">
             🚀 I built this project as part of my CS2220 Class Bio-informatics Project. It was a challenging but incredibly rewarding experience.
@@ -20,7 +20,7 @@ export default function About() {
             🛠️ My tech toolbox includes React, Next.js, Tailwind CSS, Prisma, and PostgreSQL. Always learning and exploring new technologies!
           </p>
           <p className="text-lg mb-4">
-            🤓 One of the key lessons I've learned is the importance of data. I've discovered that cleaning and understanding data, as well as making meaningful connections, are the building blocks of every successful project.
+            🤓 One of the key lessons I&apos;ve learned is the importance of data. I've discovered that cleaning and understanding data, as well as making meaningful connections, are the building blocks of every successful project.
           </p>
           <Link href="/"
             className="text-blue-600 hover:underline">

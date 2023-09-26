@@ -54,7 +54,7 @@ export default function Terminology() {
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">Type of Nucleic Acid</dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        The type of nucleic acid, often specifying whether it's single-stranded (ss) or double-stranded (ds) DNA or RNA.
+                        The type of nucleic acid, often specifying whether it&apos;s single-stranded (ss) or double-stranded (ds) DNA or RNA.
                     </dd>
                 </div>
 
@@ -114,7 +114,7 @@ export default function Terminology() {
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">Journal</dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        The name of the scientific journal in which the study's results were published.
+                        The name of the scientific journal in which the study&apos;s results were published.
                     </dd>
                 </div>
 
