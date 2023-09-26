@@ -1,11 +1,13 @@
 import { Container } from "@/components/Container";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Pagination from "@/components/Pagination";
 import SearchField from "@/components/SearchField";
 import Table from "@/components/Table";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr"
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -46,6 +48,35 @@ function handleQuery(query) {
     const isSimple = query.issimple == 'true'
 }
 
+/* function to save JSON to file from browser
+    * adapted from http://bgrins.github.io/devtools-snippets/#console-save
+    * @param {Object} data -- json object to save
+    * @param {String} file -- file name to save to 
+    */
+function saveJSON(data, filename){
+
+    if(!data) {
+        console.error('No data')
+        return;
+    }
+
+    if(!filename) filename = 'console.json'
+
+    if(typeof data === "object"){
+        data = JSON.stringify(data, undefined, 4)
+    }
+
+    var blob = new Blob([data], {type: 'text/json'}),
+        e    = document.createEvent('MouseEvents'),
+        a    = document.createElement('a')
+
+    a.download = filename
+    a.href = window.URL.createObjectURL(blob)
+    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+    a.dispatchEvent(e)
+  }
+
 /***
  data.count <- tells us how many rows there are
  data.count / 10 <- how many pages we need
@@ -79,40 +110,34 @@ export default function Results() {
     if (error) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
     // return <div>hello {data.data[0].id}!</div>
-    if (data) { 
+    if (data.data.length && data.data.length > 0) { 
         // # of items from data
-        
         return (
         <>
-            {/* <ul>
-                {data.data.map((row) => {
-                    return (
-                        <div key={row.id}>
-                        <Link href={'/acids/'+row.id}>{row.id} {row.protein_name} {row.protein_source} {row.length} {row.dG_wild_kcal_mol_} {row.nucleic_acid_name}</Link>
-                        </div>
-                    )})}
-                    <br />
-            </ul> */}
+            <Head>
+                <title>Results: {data.total_count}</title>
+            </Head>
+
+            <div className="flex flex-col min-h-screen min-w-full"> {/* Use a div wrapper with flex and flex-col */}
             <Header />
-            
-            <Container>
-            <SearchField columnIndex={colindex} value={value} />
-            <Table results={data.data} />
-            <Pagination page={page} setPage={setPage} length={data.data.length} />
-            </Container>
+            <main className='flex-grow'>
+                <Container className="pt-4 pb-16 text-center lg:pt-5">
+                    {isSimpleSearch && <SearchField columnIndex={colindex} value={value} /> }
+
+                    <button onClick={() => saveJSON(data.total, "results.json")}
+                    type="button"
+        className="rounded-md bg-indigo-50 m-5 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+                    > Download Table json format</button>
+                    <Table results={data.data} />
+
+                    <Pagination page={page} setPage={setPage} length={data.data.length} total={data.total_count} />
+                </Container>
+            </main>
+
+            {/* <Footer /> */}
+            </div>
+
         </>
     )
     }
-
-    return (
-        <>
-        <Header />
-            <Container>
-            <Table results={dummyData} />
-            {/* <Pagination /> */}
-            </Container>
-            
-        </>
-
-    )
 }

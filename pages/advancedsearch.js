@@ -8,16 +8,17 @@ import useSWR from "swr";
 export default function AdvanceSearch() {
     // Pass Columns into search
     const fetcher = (url) => fetch(url).then((res) => res.json());
+
     const res_protein_name = useSWR('/api/column?name=protein_name',fetcher)
-    const res_protein_source = useSWR('/api/column?name=protein_source',fetcher)
-    const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
+    const res_protein_source = useSWR(() => '/api/column?name=protein_source',fetcher)
+    const res_uniprotid = useSWR(() => '/api/column?name=uniprot_id',fetcher)
 
-    const res_nuc_acid_name = useSWR('/api/column?name=nucleic_acid_name',fetcher)
-    const res_type_nuc = useSWR('/api/column?name=type_nuc',fetcher)
+    const res_nuc_acid_name = useSWR(() => '/api/column?name=nucleic_acid_name',fetcher)
+    const res_type_nuc = useSWR(() =>'/api/column?name=type_nuc',fetcher)
 
-    const res_method = useSWR('/api/column?name=method',fetcher)
-    // const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
-    // console.log(res_protein_name.data, res_protein_source.data, res_uniprotid.data)
+    const res_method = useSWR(() =>'/api/column?name=method',fetcher)
+    
+
     if((res_protein_name.isLoading && res_protein_name.isLoading && res_protein_name.isLoading)) { return <>Loading</>}
     if((res_protein_name.error && res_protein_name.error && res_protein_name.error)) { return <>Error</>}
 
@@ -36,7 +37,7 @@ export default function AdvanceSearch() {
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Protein Information</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                                TODO: description here
+                            This section collects information related to the protein involved in the interaction. It typically includes details such as the protein&apos;s name, source organism, length (number of amino acids), if applicable. This information is essential for characterizing the protein's identity and state.
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -89,7 +90,7 @@ export default function AdvanceSearch() {
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Nucleic Acid</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                                TODO: description here
+                            The Nucleic Acid section focuses on gathering details about the nucleic acid component of the interaction. It commonly includes the nucleic acid's name or description, its type (e.g., DNA or RNA). This information helps identify the nature of the genetic material involved.
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -110,7 +111,7 @@ export default function AdvanceSearch() {
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Experimental Condition</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                                TODO: description here
+                            Captures the conditions under which the protein-nucleic acid interaction was studied or measured. Key factors include the pH level, temperature, and the method or technique used for the experiment. These conditions play a significant role in determining the stability and dynamics of the interaction.
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -193,7 +194,7 @@ export default function AdvanceSearch() {
                         <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Thermodynamic Parameters</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                                TODO: description here
+                            The Thermodynamic Parameters section deals with the quantitative aspects of the interaction. It typically includes values such as the Gibbs free energy change (ΔG), often represented as dG_wild (kcal/mol), which measures the energetics of the interaction. Additionally, it may include information about the change in Gibbs free energy (ΔΔG or ddG) resulting from mutations or alterations in the protein. These parameters provide insights into the thermodynamics of the interaction.
                             </p>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -203,7 +204,7 @@ export default function AdvanceSearch() {
 
                                         <div className="sm:col-span-3">
                                         <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                            dG_wild
+                                            ΔG - dG_wild (kcal/mol)
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -236,7 +237,7 @@ export default function AdvanceSearch() {
 
                                     <div className="sm:col-span-3">
                                         <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                            ddG
+                                        ΔΔG - ddG
                                         </label>
                                         <div className="mt-2">
                                             <input

@@ -6,8 +6,7 @@ import { Container } from '@/components/Container'
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-50" >
-        <div className="py-2">
+    <footer className="bg-slate-50  mt-auto" >
           {/* <Logo className="mx-auto h-10 w-auto" /> */}
           {/* <nav className="mt-10 text-sm" aria-label="quick links">
             <div className="-my-1 flex justify-center gap-x-6">
@@ -17,9 +16,8 @@ export default function Footer() {
               <NavLink href="#newsletter">Get Notified</NavLink>
             </div>
           </nav> */}
-        </div>
         <div className="flex flex-col items-center border-t border-slate-400/10 py-10 sm:flex-row-reverse sm:justify-between">
-          <div className="flex gap-x-6">
+          <div>
             {/* <Link
               href="https://www.linkedin.com/company/minatic/"
               className="group"
@@ -37,8 +35,8 @@ export default function Footer() {
             </Link> */}
             
           </div>
-          <p className="mt-6 text-sm text-slate-500 sm:mt-0">
-            Copyright &copy; {new Date().getFullYear()} Minatic. All rights
+          <p className="m-auto mt-6 text-sm text-slate-500 sm:mt-0">
+            Copyright &copy; {new Date().getFullYear()} ProNuQuery. All rights
             reserved.
           </p>
         </div>
