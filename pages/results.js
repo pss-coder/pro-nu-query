@@ -48,6 +48,35 @@ function handleQuery(query) {
     const isSimple = query.issimple == 'true'
 }
 
+/* function to save JSON to file from browser
+    * adapted from http://bgrins.github.io/devtools-snippets/#console-save
+    * @param {Object} data -- json object to save
+    * @param {String} file -- file name to save to 
+    */
+function saveJSON(data, filename){
+
+    if(!data) {
+        console.error('No data')
+        return;
+    }
+
+    if(!filename) filename = 'console.json'
+
+    if(typeof data === "object"){
+        data = JSON.stringify(data, undefined, 4)
+    }
+
+    var blob = new Blob([data], {type: 'text/json'}),
+        e    = document.createEvent('MouseEvents'),
+        a    = document.createElement('a')
+
+    a.download = filename
+    a.href = window.URL.createObjectURL(blob)
+    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+    a.dispatchEvent(e)
+  }
+
 /***
  data.count <- tells us how many rows there are
  data.count / 10 <- how many pages we need
@@ -95,13 +124,17 @@ export default function Results() {
                 <Container className="pt-4 pb-16 text-center lg:pt-5">
                     {isSimpleSearch && <SearchField columnIndex={colindex} value={value} /> }
 
+                    <button onClick={() => saveJSON(data.total, "results.json")}
+                    type="button"
+        className="rounded-md bg-indigo-50 m-5 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+                    > Download Table json format</button>
                     <Table results={data.data} />
 
                     <Pagination page={page} setPage={setPage} length={data.data.length} total={data.total_count} />
                 </Container>
             </main>
 
-            <Footer />
+            {/* <Footer /> */}
             </div>
 
         </>

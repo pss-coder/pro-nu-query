@@ -85,7 +85,13 @@ export default async function handler(req, res) {
         var result = await prisma.project.findMany({take: 10,skip: 10*req.query.page})
         const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
         const data = JSON.parse(fix_bigINT_data)
-        res.status(200).json({data: data})
+
+        var cr = await prisma.project.findMany()
+        count = cr.length
+
+
+        res.status(200).json({data: data, total_count: count, total:
+            JSON.parse( JSON.stringify(cr, (_, v) => typeof v === 'bigint' ? v.toString() : v))})
         return
     }
 
@@ -146,7 +152,8 @@ export default async function handler(req, res) {
     const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
     const data = JSON.parse(fix_bigINT_data)
     if(data.length > 0 ) {
-        return res.status(200).json({data: data, total_count: count})
+        return res.status(200).json({data: data, total_count: count, total:
+            JSON.parse( JSON.stringify(cr, (_, v) => typeof v === 'bigint' ? v.toString() : v))})
     } else {
         return res.status(400).json({ error: { message:  'No result found' } })
     }
@@ -204,7 +211,8 @@ export default async function handler(req, res) {
     const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
     const data = JSON.parse(fix_bigINT_data)    
 
-    res.status(200).json({data: data, total_count: count})
+    res.status(200).json({data: data, total_count: count, total:
+        JSON.parse( JSON.stringify(cr, (_, v) => typeof v === 'bigint' ? v.toString() : v))})
 
 
 

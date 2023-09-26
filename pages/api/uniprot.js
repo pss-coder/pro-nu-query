@@ -3,9 +3,9 @@ const { JSDOM } = jsdom;
 const DOMParser = new JSDOM().window.DOMParser;
 
 export default async function handler(req, res) {
-  console.log('query', req.query)
+  // console.log('query', req.query)
     const {uniprotid} = req.query
-    console.log("uniprot id received: ", uniprotid)
+    // console.log("uniprot id received: ", uniprotid)
 
     try {
         const response = await fetch(`https://rest.uniprot.org/uniprotkb/${uniprotid}.xml`);

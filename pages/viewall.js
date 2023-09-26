@@ -2,6 +2,7 @@ import { Container } from "@/components/Container";
 import Header from "@/components/Header";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
+import Head from "next/head";
 import { useState } from "react";
 import useSWR from "swr";
 
@@ -36,6 +37,35 @@ const dummyData = [ {
   }
 ]
 
+/* function to save JSON to file from browser
+    * adapted from http://bgrins.github.io/devtools-snippets/#console-save
+    * @param {Object} data -- json object to save
+    * @param {String} file -- file name to save to 
+    */
+function saveJSON(data, filename){
+
+  if(!data) {
+      console.error('No data')
+      return;
+  }
+
+  if(!filename) filename = 'console.json'
+
+  if(typeof data === "object"){
+      data = JSON.stringify(data, undefined, 4)
+  }
+
+  var blob = new Blob([data], {type: 'text/json'}),
+      e    = document.createEvent('MouseEvents'),
+      a    = document.createElement('a')
+
+  a.download = filename
+  a.href = window.URL.createObjectURL(blob)
+  a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+  e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+  a.dispatchEvent(e)
+}
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function ViewAll() {
@@ -50,11 +80,18 @@ export default function ViewAll() {
     if (data) {
         return (
             <>
+            <Head>
+                <title>View All</title>
+            </Head>
                 <Header />
                 
                 <Container>
+                <button onClick={() => saveJSON(data.total, "results.json")}
+                    type="button"
+        className="rounded-md bg-indigo-50 m-5 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+                    > Download Table json format</button>
                 <Table results={data.data} />
-                <Pagination page={page} setPage={setPage} length={data.data.length} />
+                <Pagination page={page} setPage={setPage} length={data.data.length} total={data.total_count} />
                 </Container>
             </>
         )
