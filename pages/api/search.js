@@ -198,7 +198,6 @@ export default async function handler(req, res) {
     delete query.skip
     var cr = await prisma.project.findMany(query)
     count = cr.length
-    console.log(count)
 
     
 

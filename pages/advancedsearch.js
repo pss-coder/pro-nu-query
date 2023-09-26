@@ -8,16 +8,17 @@ import useSWR from "swr";
 export default function AdvanceSearch() {
     // Pass Columns into search
     const fetcher = (url) => fetch(url).then((res) => res.json());
+
     const res_protein_name = useSWR('/api/column?name=protein_name',fetcher)
-    const res_protein_source = useSWR('/api/column?name=protein_source',fetcher)
-    const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
+    const res_protein_source = useSWR(() => '/api/column?name=protein_source',fetcher)
+    const res_uniprotid = useSWR(() => '/api/column?name=uniprot_id',fetcher)
 
-    const res_nuc_acid_name = useSWR('/api/column?name=nucleic_acid_name',fetcher)
-    const res_type_nuc = useSWR('/api/column?name=type_nuc',fetcher)
+    const res_nuc_acid_name = useSWR(() => '/api/column?name=nucleic_acid_name',fetcher)
+    const res_type_nuc = useSWR(() =>'/api/column?name=type_nuc',fetcher)
 
-    const res_method = useSWR('/api/column?name=method',fetcher)
-    // const res_uniprotid = useSWR('/api/column?name=uniprot_id',fetcher)
-    // console.log(res_protein_name.data, res_protein_source.data, res_uniprotid.data)
+    const res_method = useSWR(() =>'/api/column?name=method',fetcher)
+    
+
     if((res_protein_name.isLoading && res_protein_name.isLoading && res_protein_name.isLoading)) { return <>Loading</>}
     if((res_protein_name.error && res_protein_name.error && res_protein_name.error)) { return <>Error</>}
 

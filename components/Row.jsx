@@ -14,6 +14,7 @@
 */
 import { Fragment, useState } from 'react'
 import { Tab } from '@headlessui/react'
+import useSWR from 'swr'
 
 const tbs = [
   {
@@ -79,17 +80,17 @@ Const tabs = [
 */
 
 
-function displayProteinInfo(protein_name, protein_source,sequence,length, uniprot_id, mutation) {
+function displayProteinInfo(protein_name, protein_source,length, uniprot_id, mutation) {
     return (
-        <div className="mt-6 lg:col-span-5 lg:mt-0">
+        <div>
             <h3 className="text-lg font-medium text-gray-900">Protein Name</h3>
             <p className="mt-2 text-sm text-gray-500">{protein_name}</p>
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Protein Source</h3>
             <p className="mt-2 text-sm text-gray-500">{protein_source}</p>
 
-            <h3 className="mt-4 text-lg font-medium text-gray-900">Sequence</h3>
-            <p className="mt-2 text-sm text-gray-500">{sequence}</p>
+            {/* <h3 className="mt-4 text-lg font-medium text-gray-900">Sequence</h3>
+            <p className="mt-2 text-sm text-gray-500">{sequence}</p> */}
 
             <h3 className="mt-4 text-lg font-medium text-gray-900">Length</h3>
             <p className="mt-2 text-sm text-gray-500">{length}</p>
@@ -160,6 +161,22 @@ function displayReferences(year, authors, journal) {
     )
 }
 
+function getSequence(xml) {
+  const DomParser = new DOMParser()
+  let XMLparsed = DomParser.parseFromString( xml, 'application/xml')
+  const sequences = XMLparsed.querySelectorAll('sequence')
+  const sq = sequences[sequences.length - 1]
+  // console.log(sq.innerHTML)
+  // console.log(sq.getAttribute('length'))
+  // console.log(sq.getAttribute('mass'))
+
+  return (
+    <>
+      <h3 className="mt-4 text-lg font-medium text-gray-900">Sequence - retrieved from UniProt</h3>
+      <p className="mt-2 text-sm text-gray-500 break-all">{sq.innerHTML}</p>
+    </>
+  )
+}
 
 
 
@@ -167,8 +184,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Row({data}) {
-  console.log(data)
+export default function Row({acid}) {
+  // console.log(sequence)
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  console.log(`/api/uniprot?uniprotid=${acid.uniprot_id}`)
+
+  const {data, error, isLoading} = useSWR(`/api/uniprot?uniprotid=${acid.uniprot_id}`, fetcher)
+
     const [tabs, setTabs] = useState(
         [
           {name: 'Protein'},
@@ -179,6 +201,7 @@ export default function Row({data}) {
           {name: 'References'},
         ]
       )
+
 
 
   return (
@@ -193,6 +216,9 @@ export default function Row({data}) {
               The Organize modular system offers endless options for arranging your favorite and most used items. Keep
               everything at reach and in its place, while dressing up your workspace.
             </p> */}
+            {/* {isLoading && <>isLoading: {isLoading}</>}
+            {error && <>error: {error}</>}
+            { data && <>{getSequence(data.data)}</>} */}
           </div>
 
           <Tab.Group as="div" className="mt-4">
@@ -227,11 +253,16 @@ export default function Row({data}) {
                     
                     <div key={tab.name + index} className="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8">
 
-                        {tab.name == 'Protein' && <> {displayProteinInfo(data.protein_name, data.protein_source,"sequence todo", data.length, data.uniprot_id, data.mutation_protein)} </>}
-                        {tab.name == 'Nucleic Acid' && <> {displayNucleicAcid(data.nucleic_acid_name, data.type_nuc)}</>}
-                        {tab.name == 'Experimental Conditions' && <>{displayExperimentalConditions(data.pH, data.temperature, data.method)}</>}
-                        {tab.name == 'Thermodynamic Parameters' && <>{displayThermodynamicParameters(data.dG_wild_kcal_mol_, data.ddG)}</>}
-                        {tab.name == 'References' && <>{displayReferences(data.year, data.authors, data.journal)}</>}
+                        {tab.name == 'Protein' && <div className="mt-6 lg:col-span-5 lg:mt-0">
+                        {displayProteinInfo(acid.protein_name.join(', '), acid.protein_source, acid.length, acid.uniprot_id, acid.mutation_protein)}
+
+                        {data && getSequence(data.data) }
+                        </div> 
+                        }
+                        {tab.name == 'Nucleic Acid' && <> {displayNucleicAcid(acid.nucleic_acid_name, acid.type_nuc)}</>}
+                        {tab.name == 'Experimental Conditions' && <>{displayExperimentalConditions(acid.pH, acid.temperature, acid.method)}</>}
+                        {tab.name == 'Thermodynamic Parameters' && <>{displayThermodynamicParameters(acid.dG_wild_kcal_mol_, acid.ddG)}</>}
+                        {tab.name == 'References' && <>{displayReferences(acid.year, acid.authors, acid.journal)}</>}
 
                     </div>
 
