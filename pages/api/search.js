@@ -30,6 +30,7 @@ function protein_info_filter(protein_name, protein_source, uniprot_id, length_fr
 
 function nuc_acid_filter(nuc_acid, type) {
     if(nuc_acid) {
+
         query.where.nucleic_acid_name = nuc_acid
     }
     if(type) {
@@ -40,14 +41,14 @@ function nuc_acid_filter(nuc_acid, type) {
 function experimental_condition_filter(method, temp_from, temp_to, ph_from, ph_to) {
     if (temp_from && temp_to) {
         query.where.temperature = {
-            gte: parseFloat(temp_from),
-            lte: parseFloat(temp_to)
+            gte: parseInt(temp_from),
+            lte: parseInt(temp_to)
         }
     }
     if (ph_from && ph_to) {
         query.where.pH = {
-            gte: parseFloat(ph_from),
-            lte: parseFloat(ph_to)
+            gte: parseInt(ph_from),
+            lte: parseInt(ph_to)
         }
     }
 
@@ -59,18 +60,17 @@ function experimental_condition_filter(method, temp_from, temp_to, ph_from, ph_t
 }
 
 function thermo_param_filter(dg_wild_from, dg_wild_to, ddg_from, ddg_to) {
-    
-    if (dg_wild_from && dg_wild_to) {
+    if (dg_wild_from || dg_wild_to) {
         query.where.dG_wild_kcal_mol_ = {
-            gte: parseFloat(dg_wild_from),
-            lte: parseFloat(dg_wild_to)
+            gte: dg_wild_from ? parseInt(dg_wild_from) : 0,
+            lte: dg_wild_to ? parseInt(dg_wild_to) : 0
         }
     }
 
     if (ddg_from && ddg_to) {
         query.where.ddG = {
-            gte: parseFloat(ddg_from),
-            lte: parseFloat(ddg_to)
+            gte: Number(ddg_from),
+            lte: Number(ddg_to)
         }
     }
 
@@ -190,7 +190,7 @@ export default async function handler(req, res) {
     thermo_param_filter(dg_wild_from, dg_wild_to, ddg_from, ddg_to)
 
     // TODO: add the other filters
-
+    // console.log(query)
 
     
     query.take = 10
@@ -199,18 +199,18 @@ export default async function handler(req, res) {
     // console.log(query)
 
     var result = await prisma.project.findMany(query)
-
+    // console.log(result.length)
 
     delete query.take
     delete query.skip
     var cr = await prisma.project.findMany(query)
     count = cr.length
 
-    
-
     const fix_bigINT_data = JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v)
     const data = JSON.parse(fix_bigINT_data)    
 
+    
+    console.log(query)
     res.status(200).json({data: data, total_count: count, total:
         JSON.parse( JSON.stringify(cr, (_, v) => typeof v === 'bigint' ? v.toString() : v))})
 

@@ -98,7 +98,6 @@ export default function Results() {
     const isAdvancedSearch = !isSimpleSearch
     var qury = router.query
     qury.page = page
-
     
     
 
@@ -110,7 +109,14 @@ export default function Results() {
     if (error) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
     // return <div>hello {data.data[0].id}!</div>
-    if (data.data.length && data.data.length > 0) { 
+    if(data.data.length == 0) { return (
+        <>
+        No Results Found
+        <Link href={'/'}>Go Back Home</Link></>
+    )
+}
+    if (data.data.length > 0) { 
+        console.log("has lenght")
         // # of items from data
         return (
         <>
