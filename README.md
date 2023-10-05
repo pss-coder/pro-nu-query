@@ -2,7 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 This project was built for my CS2220 Project 1.
 
 # My Tech Stack View
-<img width="1076" alt="Screenshot 2023-10-05 at 4 50 09 PM" src="https://github.com/pss-coder/pro-nu-query/assets/22881285/ccb77441-3192-4832-b44f-c2b9f820febb">
+<img width="1076" alt="Screenshot 2023-10-05 at 4 55 04 PM" src="https://github.com/pss-coder/pro-nu-query/assets/22881285/56a35b7d-9570-41df-b725-a88f58a5614c">
+
 
 
 ## Database Information
