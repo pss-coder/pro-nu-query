@@ -254,7 +254,7 @@ export default function Row({acid}) {
                     <div key={tab.name + index} className="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8">
 
                         {tab.name == 'Protein' && <div className="mt-6 lg:col-span-5 lg:mt-0">
-                        {displayProteinInfo(acid.protein_name.join(', '), acid.protein_source, acid.length, acid.uniprot_id, acid.mutation_protein)}
+                        {displayProteinInfo(acid.protein_name.join(', '), acid.protein_source, acid.length, acid.uniprot_id, acid.mutation_protein.join(', '))}
 
                         {data && getSequence(data.data) }
                         </div> 

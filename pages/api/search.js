@@ -125,7 +125,27 @@ export default async function handler(req, res) {
           })
         count = cr.length
 
-    } else {
+    } else if (column == "mutation_protein") {
+        result = await prisma.project.findMany({
+            where: {
+                'mutation_protein': {
+                    hasSome: [value]
+                }
+            },
+            take: 10,
+            skip: 10*page
+          })
+
+        var cr = await prisma.project.findMany({
+            where: {
+                'mutation_protein': {
+                    hasSome: [value]
+                }
+            },
+          })
+        count = cr.length
+    }
+    else {
         result = await prisma.project.findMany({
             where: {
                 [column]: {
